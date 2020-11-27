@@ -19,17 +19,20 @@ router.beforeEach((to, from, next) => {
   to.meta && (typeof to.meta.title !== 'undefined' && setDocumentTitle(`${i18nRender(to.meta.title)} - ${domTitle}`))
   /* has token */
   if (storage.get(ACCESS_TOKEN)) {
+
     if (to.path === loginRoutePath) {
       next({ path: defaultRoutePath })
       NProgress.done()
     } else {
       // check login user.roles is null
-      if (store.getters.roles.length === 0) {
+      console.log(store.getters.addRouters.length == 0)
+      // if (!store.getters.userInfo) {
+        if (store.getters.addRouters.length == 0) {
         // request login userInfo
         store
           .dispatch('GetInfo')
           .then(res => {
-            const roles = res.result && res.result.role
+            const roles = res.data && res.data.roles
             // generate dynamic router
             store.dispatch('GenerateRoutes', { roles }).then(() => {
               // 根据roles权限生成可访问的路由表
@@ -46,15 +49,16 @@ router.beforeEach((to, from, next) => {
               }
             })
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err)
             notification.error({
               message: '错误',
               description: '请求用户信息失败，请重试'
             })
             // 失败时，获取用户信息失败时，调用登出，来清空历史保留信息
-            store.dispatch('Logout').then(() => {
-              next({ path: loginRoutePath, query: { redirect: to.fullPath } })
-            })
+            // store.dispatch('Logout').then(() => {
+            //   next({ path: loginRoutePath, query: { redirect: to.fullPath } })
+            // })
           })
       } else {
         next()
