@@ -44,6 +44,21 @@ export const asyncRouterMap = [
           }
         ]
       },
+    
+      {
+        path: '/admin',
+        redirect: '/admin/list',
+        component: RouteView,
+        meta: { title: '管理员管理', icon: 'user', permission: [ 'form' ] },
+        children: [
+          {
+            path: '/admin/list',
+            name: 'AdminList',
+            component: () => import('@/views/admin/List'),
+            meta: { title: '管理员列表', keepAlive: false, permission: [ 'form' ] }
+          }
+        ]
+      },
 
       // forms
       {

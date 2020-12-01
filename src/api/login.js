@@ -2,10 +2,10 @@ import request from '@/utils/request'
 
 const userApi = {
   Login: '/admin/login',
-  Logout: '/auth/logout',
-  ForgePassword: '/auth/forge-password',
-  Register: '/auth/register',
-  twoStepCode: '/auth/2step-code',
+  Logout: '/admin/logout',
+  ForgePassword: '/admin/forge-password',
+  Register: '/admin/register',
+  twoStepCode: '/admin/2step-code',
   SendSms: '/account/sms',
   SendSmsErr: '/account/sms_err',
   // get my info
