@@ -4,7 +4,7 @@
              <a-input v-model="form.account" />
         </a-form-model-item>
 
-        <a-form-model-item label="Avatar">
+        <a-form-model-item label="Avatar" prop="avatar">
              <a-upload
                 name="avatar"
                 list-type="picture-card"
@@ -32,18 +32,18 @@
              <a-input v-model="form.phone" />
         </a-form-model-item>
 
-        <a-form-model-item label="Password">
+        <a-form-model-item label="Password" prop="password">
              <a-input v-model="form.password" />
         </a-form-model-item>
 
-        <a-form-model-item label="Confirm Password">
+        <a-form-model-item label="Confirm Password" prop="confirm_password">
              <a-input v-model="form.confirm_password" />
         </a-form-model-item>
 
     </a-form-model>
 </template>
 <script>
-import { validatePhone } from "@/utils/validate"
+import { validatePhone, validatePassword } from "@/utils/validate"
 export default {
     name: "ModuleForm",
     data() {
@@ -53,6 +53,9 @@ export default {
                 account: [
                     { required: true, message: 'Please input Activity Account', trigger: 'blur'}
                 ],
+                avatar: [
+                    { required: true, message: 'Please upload avatar', trigger: 'blur'}
+                ],
                 email: [
                     { required: true, message: '请输入邮箱', trigger: 'blur'},
                     { type: 'email',  message: '请输入正确的邮箱' },
@@ -60,12 +63,27 @@ export default {
                 phone: [
                     { required: true, message: '请输入电话号码', trigger: 'blur'},
                     { validator: validatePhone, trigger: 'blur'},
+                ],
+                password: [
+                    { validator: validatePassword, trigger: 'blur'},
+                ],
+                confirm_password: [
+                    { validator: validatePassword, trigger: 'blur'},
+                    { validator: this.validateConfirmPassword, trigger: 'blur'},
                 ]
             },
             loading: false
         }
     },
     methods: {
+        validateConfirmPassword(rule, value, callback){
+            let pass = this.form.password
+            if(pass !== value) {
+                return callback(new Error('两次输入密码不一致'));
+            }
+            
+            return callback()
+        },
         handleChange(info) {
             if (info.file.status === 'uploading') {
                 this.loading = true;

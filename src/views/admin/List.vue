@@ -35,7 +35,7 @@
       @cancel="visible = false"
     >
      
-    <module-form></module-form>
+    <module-form v-if="visible"></module-form>
     </a-modal>
 
   </page-header-wrapper>
