@@ -2,10 +2,13 @@
   <page-header-wrapper>
     <a-card
       style="margin-top: 24px"
-      :bordered="false"
-      title="标准列表">
+      :bordered="false">
 
       <div slot="extra">
+        <div class="operate">
+            <a-button type="primary" class="addAdmin" @click="add">{{ $t('add') }}</a-button>
+        </div>
+
         <a-radio-group v-model="status">
           <a-radio-button value="all">全部</a-radio-button>
           <a-radio-button value="processing">进行中</a-radio-button>
@@ -14,25 +17,54 @@
         <a-input-search style="margin-left: 16px; width: 272px;" />
       </div>
 
-      <div class="operate">
-        <a-button type="dashed" style="width: 100%" icon="plus" @click="add">添加</a-button>
-      </div>
+      
 
-      <a-table :data-source="data" bordered>
-        <template slot="account" slot-scope="text">
-          <a>{{ text }}</a>
-        </template>
-
+      <a-table :data-source="data" :columns="columns">
+        <a slot="account" slot-scope="text, record">
+          <a-avatar :src="record.avatar" />
+          {{ text }}
+        </a>
       </a-table>
+
     </a-card>
   </page-header-wrapper>
 </template>
 
 <script>
 // 演示如何使用 this.$dialog 封装 modal 组件
-import TaskForm from './modules/TaskForm'
+import TaskForm from './modules/Form'
 import Info from './components/Info'
 import { getList } from '@/api/admin'
+
+
+const columns = [
+  {
+    title: '账号',
+    key: 'account',
+    dataIndex: 'account',
+    scopedSlots: { customRender: 'account' },
+  },
+  {
+    title: '简介',
+    key: 'description',
+    dataIndex: 'description',
+  },
+  {
+    title: 'Email',
+    key: 'email',
+    dataIndex: 'email',
+  },
+  {
+    title: 'Phone',
+    key: 'phone',
+    dataIndex: 'phone',
+  },
+  {
+    title: '创建时间',
+    key: 'created_at',
+    dataIndex: 'created_at',
+  }
+];
 
 const data = []
 export default {
@@ -45,6 +77,7 @@ export default {
     return {
       data: [],
       status: 'all',
+      columns,
       page: 1,
       pagination: {
         onChange: page => {
@@ -141,13 +174,19 @@ export default {
     vertical-align: middle;
     font-size: 14px;
     margin-left: 40px;
+
     span {
         line-height: 20px;
     }
+
     p {
         margin-top: 4px;
         margin-bottom: 0;
         line-height: 22px;
     }
+}
+.operate {
+  float: left;
+  margin-right: 20px;
 }
 </style>
