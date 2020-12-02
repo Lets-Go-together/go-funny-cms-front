@@ -31,9 +31,6 @@
 </template>
 
 <script>
-// 演示如何使用 this.$dialog 封装 modal 组件
-import TaskForm from './modules/Form'
-import Info from './components/Info'
 import { getList } from '@/api/admin'
 
 
@@ -69,10 +66,6 @@ const columns = [
 const data = []
 export default {
   name: 'AdminList',
-  components: {
-    TaskForm,
-    Info
-  },
   data () {
     return {
       data: [],
@@ -107,55 +100,9 @@ export default {
     },
 
     add () {
-      this.$dialog(TaskForm,
-        // component props
-        {
-          record: {},
-          on: {
-            ok () {
-              console.log('ok 回调')
-            },
-            cancel () {
-              console.log('cancel 回调')
-            },
-            close () {
-              console.log('modal close 回调')
-            }
-          }
-        },
-        // modal props
-        {
-          title: '新增',
-          width: 700,
-          centered: true,
-          maskClosable: false
-        })
     },
     edit (record) {
-      console.log('record', record)
-      this.$dialog(TaskForm,
-        // component props
-        {
-          record,
-          on: {
-            ok () {
-              console.log('ok 回调')
-            },
-            cancel () {
-              console.log('cancel 回调')
-            },
-            close () {
-              console.log('modal close 回调')
-            }
-          }
-        },
-        // modal props
-        {
-          title: '操作',
-          width: 700,
-          centered: true,
-          maskClosable: false
-        })
+      
     }
   }
 }
