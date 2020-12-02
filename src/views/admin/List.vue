@@ -6,7 +6,7 @@
 
       <div slot="extra">
         <div class="operate">
-            <a-button type="primary" class="addAdmin" @click="add">{{ $t('add') }}</a-button>
+            <a-button type="primary" class="addAdmin" @click="visible = true">{{ $t('add') }}</a-button>
         </div>
 
         <a-radio-group v-model="status">
@@ -25,12 +25,25 @@
       </a-table>
 
     </a-card>
+
+    <a-modal
+      :title="title"
+      width="40%"
+      :visible="visible"
+      :confirm-loading="confirmLoading"
+      @ok="editOrCreate"
+      @cancel="visible = false"
+    >
+     
+    <module-form></module-form>
+    </a-modal>
+
   </page-header-wrapper>
 </template>
 
 <script>
 import { getList } from '@/api/admin'
-
+import ModuleForm from "./modules/form"
 
 const columns = [
   {
@@ -64,6 +77,9 @@ const columns = [
 const data = []
 export default {
   name: 'AdminList',
+  components: {
+    ModuleForm
+  },
   data () {
     return {
       data: [],
@@ -79,7 +95,11 @@ export default {
         showQuickJumper: true, 
         pageSize: 20, 
         total: 50
-      }
+      },
+      title: "新增",
+      visible: false,
+      confirmLoading: false,
+      form: {}
     }
   },
   created () {
@@ -97,7 +117,12 @@ export default {
       })
     },
 
-    add () {
+    add() {
+      this.visible = true
+    },
+
+    editOrCreate () {
+
     },
     edit (record) {
       
