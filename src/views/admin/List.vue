@@ -16,9 +16,7 @@
         </a-radio-group>
         <a-input-search style="margin-left: 16px; width: 272px;" />
       </div>
-
       
-
       <a-table :data-source="data" :columns="columns">
         <a slot="account" slot-scope="text, record">
           <a-avatar :src="record.avatar" />
