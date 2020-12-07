@@ -24,6 +24,16 @@
              <a-input v-model="form.confirm_password" />
         </a-form-model-item>
 
+        <a-form-model-item :wrapper-col="{ span: 16, offset: 6 }">
+            <a-button type="primary" @click="onSubmit">
+                确认
+            </a-button>
+            <a-button style="margin-left: 10px;">
+                取消
+            </a-button>
+            </a-form-model-item>
+        </a-form-model>
+
     </a-form-model>
 </template>
 <script>
@@ -35,15 +45,16 @@ export default {
     components: {
         UploadImage
     },
+    props: ['formData'],
     data() {
         return {
             form: { },
             rules: {
                 account: [
-                    { required: true, message: 'Please input Activity Account', trigger: 'blur'}
+                    { required: true, message: '请输入账号', trigger: 'blur'}
                 ],
                 avatar: [
-                    { required: true, message: 'Please upload avatar', trigger: 'blur'}
+                    { required: false, message: 'Please upload avatar', trigger: 'blur'}
                 ],
                 email: [
                     { required: true, message: '请输入邮箱', trigger: 'blur'},
@@ -72,6 +83,16 @@ export default {
             }
             
             return callback()
+        },
+        onSubmit() {
+            this.$refs.ruleForm.validate(valid => {
+                if (valid) {
+                    this.$emit("addSubmit", this.form)
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     }
 }

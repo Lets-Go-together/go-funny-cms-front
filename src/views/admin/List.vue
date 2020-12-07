@@ -31,11 +31,11 @@
       width="40%"
       :visible="visible"
       :confirm-loading="confirmLoading"
-      @ok="editOrCreate"
       @cancel="visible = false"
+      :footer="null"
     >
      
-    <module-form v-if="visible"></module-form>
+    <module-form v-if="visible" :formData.sync="form" @addSubmit="addSubmit"></module-form>
     </a-modal>
 
   </page-header-wrapper>
@@ -121,8 +121,8 @@ export default {
       this.visible = true
     },
 
-    editOrCreate () {
-
+    addSubmit (formData) {
+      console.log(formData)
     },
     edit (record) {
       
