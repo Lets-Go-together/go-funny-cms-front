@@ -32,8 +32,6 @@
                 取消
             </a-button>
             </a-form-model-item>
-        </a-form-model>
-
     </a-form-model>
 </template>
 <script>
@@ -80,6 +78,7 @@ export default {
             let pass = this.form.password
             if(pass !== value) {
                 return callback(new Error('两次输入密码不一致'));
+                
             }
             
             return callback()
