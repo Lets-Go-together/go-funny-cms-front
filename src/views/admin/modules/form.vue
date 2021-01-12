@@ -1,27 +1,31 @@
 <template>
-    <a-form-model ref="ruleForm" :rules="rules" :model="data" :label-col="{span: 6}" :wrapper-col="{span: 16}">
+    <a-form-model ref="ruleForm" :rules="rules" :model="modelForm" :label-col="{span: 6}" :wrapper-col="{span: 16}">
         <a-form-model-item label="Account" prop="account">
-             <a-input v-model="data.account" />
+             <a-input v-model="modelForm.account" />
         </a-form-model-item>
 
         <a-form-model-item label="Avatar" prop="avatar">
-             <upload-image :imgUrl.sync="data.avatar"></upload-image>
+             <upload-image :imgUrl.sync="modelForm.avatar"></upload-image>
         </a-form-model-item>
 
         <a-form-model-item label="Email" prop="email">
-             <a-input v-model="data.email" />
+             <a-input v-model="modelForm.email" />
         </a-form-model-item>
 
         <a-form-model-item label="Phone" prop="phone">
-             <a-input v-model="data.phone" />
+             <a-input v-model="modelForm.phone" />
         </a-form-model-item>
 
         <a-form-model-item label="Password" prop="password">
-             <a-input type="password" v-model="data.password" />
+             <a-input type="password" v-model="modelForm.password" />
         </a-form-model-item>
 
         <a-form-model-item label="Confirm Password" prop="confirm_password">
-             <a-input type="password"  v-model="data.confirm_password" />
+             <a-input type="password"  v-model="modelForm.confirm_password" />
+        </a-form-model-item>
+
+        <a-form-model-item label="Desccription" prop="description">
+             <a-input type="textarea"  v-model="modelForm.description" />
         </a-form-model-item>
 
         <a-form-model-item :wrapper-col="{ span: 16, offset: 6 }">
@@ -35,7 +39,7 @@
     </a-form-model>
 </template>
 <script>
-import { validatePhone, validatePassword } from "@/utils/validate"
+import { validatePhone, validatePassword, validateConfirmPassword } from "@/utils/validate"
 import UploadImage from '@/components/tools/UploadImage'
 
 export default {
@@ -52,8 +56,19 @@ export default {
         },
     },
     data() {
+        let validateConfirmPassword = (rule, value, callback) => {
+            let pass = this.modelForm.password
+            if(pass.length == 0) {
+                return callback()
+            }
+            if(pass !== value) {
+                return callback(new Error('两次输入密码不一致'));
+            }
+            return callback()
+        };
+
         return {
-            data: { },
+            modelForm: { },
             rules: {
                 account: [
                     { required: true, message: '请输入账号', trigger: 'blur'}
@@ -74,27 +89,20 @@ export default {
                 ],
                 confirm_password: [
                     { validator: validatePassword, trigger: 'blur'},
-                    { validator: this.validateConfirmPassword, trigger: 'blur'},
+                    { validator: validateConfirmPassword, trigger: 'blur'},
+                ],
+                description: [
+                    { required: true, message: '请输入管理员的描述', trigger: 'blur'},
                 ]
             },
             loading: false
         }
     },
     methods: {
-        validateConfirmPassword(rule, value, callback){
-            let pass = this.form.password
-            if(pass !== value) {
-                return callback(new Error('两次输入密码不一致'));
-                
-            }
-            
-            return callback()
-        },
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
-                console.log(444)
                 if (valid) {
-                    this.$emit("addSubmit", this.form)
+                    this.$emit("addSubmit", this.modelForm)
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -103,7 +111,7 @@ export default {
         }
     },
     created() {
-        this.data = this.formData
+        this.modelForm = this.formData
         console.log(this.form)
     }
 }

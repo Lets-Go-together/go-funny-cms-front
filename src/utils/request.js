@@ -49,20 +49,28 @@ request.interceptors.request.use(config => {
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`
   }
+
+  config.headers = Object.assign({
+    'Content-Type': 'application/json;charset=UTF-8'
+  }, config.headers)
+
   return config
 }, errorHandler)
 
 // response interceptor
 request.interceptors.response.use(({data}) => {
+  console.log(data)
   if (data.status == 200) {
     return data
   }
+
+  let message = data.message || "系统错误，请稍后重试"
   notification.error({
     message: '提示',
-    description: data.message || "系统错误，请稍后重试",
+    description: message,
     duration: 4
   })
-  return
+  throw new Error(message)
 }, errorHandler)
 
 const installer = {

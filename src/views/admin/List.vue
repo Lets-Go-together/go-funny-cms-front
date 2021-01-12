@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/admin'
+import { getList, add, update } from '@/api/admin'
 import ModuleForm from './modules/form'
 
 const data = []
@@ -105,6 +105,7 @@ export default {
         pageSize: this.pageSize
       }
       this.tableLoading = true
+
       getList(params).then(({ data }) => {
         this.data = data.list
         this.tableLoading = false
@@ -115,8 +116,20 @@ export default {
       this.visible = true
     },
 
-    addSubmit(formData) {
-      console.log(formData)
+    /**
+     * 提交用户资料
+     */
+    addSubmit(modelForm) {
+      let operate
+      if(modelForm.id) {
+        operate = update(modelForm.id, modelForm)
+      }else{
+        operate = add(modelForm)
+      }
+      operate.then(data => {
+        this.formModue.visible = false
+        this.$message.success(data.message);
+      })
     },
 
     edit(item) {

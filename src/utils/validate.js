@@ -20,7 +20,7 @@ export function  validatePassword(rule, value, callback){
 };
 
 export function validateConfirmPassword(rule, value, callback){
-    let pass = this.ruleForm.password
+    let pass = this.modelForm.password
     
     if(pass !== value) {
         return callback(new Error('两次输入密码不一致'));
