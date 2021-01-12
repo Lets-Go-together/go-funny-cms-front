@@ -28,7 +28,6 @@ const assetsCDN = {
     axios: 'axios'
   },
   css: [],
-  // https://unpkg.com/browse/vue@2.6.10/
   js: [
     '//cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js',
     '//cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.min.js',
@@ -106,7 +105,7 @@ const vueConfig = {
     // If you want to turn on the proxy, please remove the mockjs /src/main.jsL11
     proxy: {
       '/api': {
-        target: 'http://admin-go.surest.cn/',
+        target: 'http://127.0.0.1:8087',
         ws: false,
         changeOrigin: true
       }

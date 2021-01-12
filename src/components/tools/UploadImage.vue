@@ -25,7 +25,14 @@ import { randomString } from '@/components/_util/util'
 
 export default {
   name: 'UploadImage',
-
+  props: {
+    imgUrl: {
+      type: String,
+      default: () => {
+        return ""
+      }
+    },
+  },
   data() {
     return {
       image: 'https://cdn.surest.cn/uploads/t4zDf6BwrMWhA8sjzeEaWxhYCwsCpt4P',
@@ -42,6 +49,7 @@ export default {
 
   created() {
     this.setUploadInfo()
+    this.image = this.imgUrl
   },
 
   methods: {
@@ -85,8 +93,8 @@ export default {
      */
     uploadedImage(filename) {
       this.image = filename
-    },
-  },
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

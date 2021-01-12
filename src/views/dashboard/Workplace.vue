@@ -6,7 +6,7 @@
 <script>
 import { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 export default {
-  name: "Workplace",
-  components: {PageHeaderWrapper}
+  name: 'Workplace',
+  components: { PageHeaderWrapper }
 }
 </script>

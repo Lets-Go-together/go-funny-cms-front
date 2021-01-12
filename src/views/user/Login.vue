@@ -184,7 +184,6 @@ export default {
           loginParams.password = values.password
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
             .finally(() => {
               state.loginBtn = false
             })
@@ -224,7 +223,6 @@ export default {
             clearInterval(interval)
             state.time = 60
             state.smsSendBtn = false
-            this.requestFailed(err)
           })
         }
       })

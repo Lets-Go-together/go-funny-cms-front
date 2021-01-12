@@ -1,15 +1,15 @@
 import request from '@/utils/request'
 
 const userApi = {
-  Login: '/admin/login',
-  Logout: '/admin/logout',
+  Login: '/login',
+  Logout: '/logout',
   ForgePassword: '/admin/forge-password',
   Register: '/admin/register',
   twoStepCode: '/admin/2step-code',
   SendSms: '/account/sms',
   SendSmsErr: '/account/sms_err',
   // get my info
-  UserInfo: '/admin/me',
+  UserInfo: '/me',
   UserMenu: '/user/nav'
 }
 

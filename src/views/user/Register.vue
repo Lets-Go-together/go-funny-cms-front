@@ -247,7 +247,6 @@ export default {
               clearInterval(interval)
               state.time = 60
               state.smsSendBtn = false
-              this.requestFailed(err)
             })
           }
         }

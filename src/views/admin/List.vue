@@ -1,78 +1,66 @@
 <template>
   <page-header-wrapper>
-    <a-card
-      style="margin-top: 24px"
-      :bordered="false">
-
-      <div slot="extra">
-        <div class="operate">
-            <a-button type="primary" class="addAdmin" @click="visible = true">{{ $t('add') }}</a-button>
-        </div>
-
-        <a-radio-group v-model="status">
-          <a-radio-button value="all">全部</a-radio-button>
-          <a-radio-button value="processing">进行中</a-radio-button>
-          <a-radio-button value="waiting">等待中</a-radio-button>
-        </a-radio-group>
-        <a-input-search style="margin-left: 16px; width: 272px;" />
+    <a-card style="margin-top: 24px" :bordered="false">
+      <div class="operate">
+        <a-row class="filter" type="flex" justify="space-between" align="middle">
+          <a-col :span="12">列表</a-col>
+          <a-col :span="12">
+            <a-form layout="inline" class="form">
+              <a-form-item>
+                <a-input placeholder="search admin name" enter-button />
+              </a-form-item>
+              <a-form-item>
+                <a-button type="primary" class="addAdmin" :loading="tableLoading" icon="search" @click="getList()">{{ $t('search') }}</a-button>
+              </a-form-item>
+            </a-form>
+          </a-col>
+        </a-row>
+        
+        <a-button class="button" style="width: 100%" type="default" @click="formModue.visible = true">{{ $t('add') }}</a-button>
       </div>
-      
-      <a-table :data-source="data" :columns="columns">
-        <a slot="account" slot-scope="text, record">
-          <a-avatar :src="record.avatar" />
-          {{ text }}
-        </a>
-      </a-table>
 
+      <a-list item-layout="horizontal" :data-source="data">
+        <a-list-item slot="renderItem" slot-scope="item">
+          <a-row type="flex" justify="space-between" align="middle">
+            <a-col :span="6">
+              <a-list-item-meta :description="`描述: ${item.description}`">
+                <a slot="title" @click="show" href="javascript:;">{{ item.account }}</a>
+                <a-avatar shape="square" slot="avatar" :src="item.avatar" :size="64" />
+              </a-list-item-meta>
+            </a-col>
+            <a-col :span="6" style="text-align">
+              <div class="created_at">
+                创建时间
+                <div>{{ item.created_at }}</div>
+              </div>
+            </a-col>
+            <a-col :span="2">
+              <div class="operation">
+                <a-button type="link" @click="edit(item)">{{ $t('edit') }}</a-button>
+                <a-dropdown>
+                  <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
+                  <a-menu slot="overlay">
+                    <a-menu-item>
+                      <a href="javascript:;">删除</a>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </div>
+            </a-col>
+          </a-row>
+        </a-list-item>
+      </a-list>
     </a-card>
 
-    <a-modal
-      :title="title"
-      width="40%"
-      :visible="visible"
-      :confirm-loading="confirmLoading"
-      @cancel="visible = false"
-      :footer="null"
-    >
-     
-    <module-form v-if="visible" :formData.sync="form" @addSubmit="addSubmit"></module-form>
+    <a-modal :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="confirmLoading" @cancel="formModue.visible = false" :footer="null">
+      <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
     </a-modal>
-
   </page-header-wrapper>
 </template>
 
 <script>
 import { getList } from '@/api/admin'
-import ModuleForm from "./modules/form"
-
-const columns = [
-  {
-    title: '账号',
-    key: 'account',
-    dataIndex: 'account',
-    scopedSlots: { customRender: 'account' },
-  },
-  {
-    title: '简介',
-    key: 'description',
-    dataIndex: 'description',
-  },
-  {
-    title: 'Email',
-    key: 'email',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Phone',
-    key: 'phone',
-    dataIndex: 'phone',
-  },
-  {
-    title: '创建时间',
-    key: 'created_at',
-    dataIndex: 'created_at',
-  }
-];
+import ModuleForm from './modules/form'
 
 const data = []
 export default {
@@ -80,40 +68,46 @@ export default {
   components: {
     ModuleForm
   },
-  data () {
+  data() {
     return {
       data: [],
       status: 'all',
-      columns,
       page: 1,
       pagination: {
         onChange: page => {
           this.page = page
           this.getList()
         },
-        showSizeChanger: true, 
-        showQuickJumper: true, 
-        pageSize: 20, 
+        showSizeChanger: true,
+        showQuickJumper: true,
+        pageSize: 20,
         total: 50
       },
-      title: "新增",
-      visible: false,
+      formModue: {
+        title: '添加',
+        visible: false,
+        formData: {}
+      },
       confirmLoading: false,
-      form: {}
+      tableLoading: false
     }
   },
-  created () {
+  created() {
     this.getList()
   },
   methods: {
+    /**
+     * table列表
+     */
     getList() {
       let params = {
         page: this.page,
         pageSize: this.pageSize
       }
-      getList(params).then( ({data}) => {
+      this.tableLoading = true
+      getList(params).then(({ data }) => {
         this.data = data.list
-        console.log(this.data)
+        this.tableLoading = false
       })
     },
 
@@ -121,11 +115,24 @@ export default {
       this.visible = true
     },
 
-    addSubmit (formData) {
+    addSubmit(formData) {
       console.log(formData)
     },
-    edit (record) {
-      
+
+    edit(item) {
+      this.$set(this, 'formModue', {
+        title: '编辑',
+        visible: true,
+        formData: item
+      })
+    },
+
+    // 查看用户详情
+    show() {
+      this.formModue = {
+        title: '编辑',
+        visible: true
+      }
     }
   }
 }
@@ -133,30 +140,45 @@ export default {
 
 <style lang="less" scoped>
 .ant-avatar-lg {
-    width: 48px;
-    height: 48px;
-    line-height: 48px;
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
 }
 
 .list-content-item {
-    color: rgba(0, 0, 0, .45);
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 14px;
-    margin-left: 40px;
+  color: rgba(0, 0, 0, 0.45);
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  margin-left: 40px;
 
-    span {
-        line-height: 20px;
-    }
+  span {
+    line-height: 20px;
+  }
 
-    p {
-        margin-top: 4px;
-        margin-bottom: 0;
-        line-height: 22px;
-    }
+  p {
+    margin-top: 4px;
+    margin-bottom: 0;
+    line-height: 22px;
+  }
 }
 .operate {
-  float: left;
   margin-right: 20px;
+
+  .filter {
+    .form {
+      float: right;
+    }
+  }
+  .button {
+    margin-top: 23px;
+    margin-bottom: 23px;
+  }
+}
+
+.ant-list-item > div {
+  width: 100%;
+
+  color: rgba(0, 0, 0, 0.45);
 }
 </style>

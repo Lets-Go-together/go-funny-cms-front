@@ -1,27 +1,27 @@
 <template>
-    <a-form-model ref="ruleForm" :rules="rules" :model="form" :label-col="{span: 6}" :wrapper-col="{span: 16}">
+    <a-form-model ref="ruleForm" :rules="rules" :model="data" :label-col="{span: 6}" :wrapper-col="{span: 16}">
         <a-form-model-item label="Account" prop="account">
-             <a-input v-model="form.account" />
+             <a-input v-model="data.account" />
         </a-form-model-item>
 
         <a-form-model-item label="Avatar" prop="avatar">
-             <upload-image></upload-image>
+             <upload-image :imgUrl.sync="data.avatar"></upload-image>
         </a-form-model-item>
 
         <a-form-model-item label="Email" prop="email">
-             <a-input v-model="form.email" />
+             <a-input v-model="data.email" />
         </a-form-model-item>
 
         <a-form-model-item label="Phone" prop="phone">
-             <a-input v-model="form.phone" />
+             <a-input v-model="data.phone" />
         </a-form-model-item>
 
         <a-form-model-item label="Password" prop="password">
-             <a-input v-model="form.password" />
+             <a-input type="password" v-model="data.password" />
         </a-form-model-item>
 
         <a-form-model-item label="Confirm Password" prop="confirm_password">
-             <a-input v-model="form.confirm_password" />
+             <a-input type="password"  v-model="data.confirm_password" />
         </a-form-model-item>
 
         <a-form-model-item :wrapper-col="{ span: 16, offset: 6 }">
@@ -43,10 +43,17 @@ export default {
     components: {
         UploadImage
     },
-    props: ['formData'],
+    props: {
+        formData: {
+            type: Object,
+            default: () => {
+                return {}
+            }
+        },
+    },
     data() {
         return {
-            form: { },
+            data: { },
             rules: {
                 account: [
                     { required: true, message: '请输入账号', trigger: 'blur'}
@@ -85,14 +92,19 @@ export default {
         },
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
+                console.log(444)
                 if (valid) {
                     this.$emit("addSubmit", this.form)
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
-            });
+            })
         }
+    },
+    created() {
+        this.data = this.formData
+        console.log(this.form)
     }
 }
 </script>

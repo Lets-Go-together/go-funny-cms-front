@@ -53,8 +53,16 @@ request.interceptors.request.use(config => {
 }, errorHandler)
 
 // response interceptor
-request.interceptors.response.use((response) => {
-  return response.data
+request.interceptors.response.use(({data}) => {
+  if (data.status == 200) {
+    return data
+  }
+  notification.error({
+    message: '提示',
+    description: data.message || "系统错误，请稍后重试",
+    duration: 4
+  })
+  return
 }, errorHandler)
 
 const installer = {

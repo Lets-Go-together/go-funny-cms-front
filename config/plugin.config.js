@@ -1,5 +1,6 @@
 const ThemeColorReplacer = require('webpack-theme-color-replacer')
 const generate = require('@ant-design/colors/lib/generate').default
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 const getAntdSerials = (color) => {
   // 淡化（即less的tint）
@@ -45,5 +46,7 @@ const themePluginOption = {
 }
 
 const createThemeColorReplacerPlugin = () => new ThemeColorReplacer(themePluginOption)
+const createCompressionWebpackPlugin = () => new CompressionWebpackPlugin()
 
 module.exports = createThemeColorReplacerPlugin
+module.exports = createCompressionWebpackPlugin
