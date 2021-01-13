@@ -93,6 +93,7 @@ export default {
      */
     uploadedImage(filename) {
       this.image = filename
+      this.$emit('update:imgUrl', filename)
     }
   }
 }

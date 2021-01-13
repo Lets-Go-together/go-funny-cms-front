@@ -8,11 +8,11 @@ export function getList (params) {
     })
   }
 
-export function add () {
+export function add (params) {
     return request({
       url: "/admin",
       method: 'post',
-      params
+      data: params
     })
   }
 

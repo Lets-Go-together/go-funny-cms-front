@@ -16,7 +16,7 @@
           </a-col>
         </a-row>
         
-        <a-button class="button" style="width: 100%" type="default" @click="formModue.visible = true">{{ $t('add') }}</a-button>
+        <a-button class="button" style="width: 100%" type="default" @click="add">{{ $t('add') }}</a-button>
       </div>
 
       <a-list item-layout="horizontal" :data-source="data">
@@ -113,7 +113,8 @@ export default {
     },
 
     add() {
-      this.visible = true
+      this.formModue.visible = true
+      this.formModue.formData = {}
     },
 
     /**
@@ -129,10 +130,12 @@ export default {
       operate.then(data => {
         this.formModue.visible = false
         this.$message.success(data.message);
+        this.getList()
       })
     },
 
     edit(item) {
+      item = JSON.parse(JSON.stringify(item))
       this.$set(this, 'formModue', {
         title: '编辑',
         visible: true,

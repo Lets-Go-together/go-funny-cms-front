@@ -1,7 +1,10 @@
 {
   "printWidth": 600,
   "singleQuote": true,
-  "semi": false,
+  "semi": true,
   "arrowParens": "avoid",
-  "bracketSpacing": true
+  "tabWidth": 4,
+  "useTabs": false,
+  "disableLanguages": ["vue"],
+  "url": "https://www.cnblogs.com/oneweek/p/11236515.html"
 }
