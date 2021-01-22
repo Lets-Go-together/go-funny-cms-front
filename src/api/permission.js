@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getList (params) {
     return request({
-      url: "/admin",
+      url: "/permission",
       method: 'get',
       params
     })
@@ -10,7 +10,7 @@ export function getList (params) {
 
 export function add (params) {
     return request({
-      url: "/admin",
+      url: "/permission",
       method: 'post',
       data: params
     })
@@ -18,7 +18,7 @@ export function add (params) {
 
 export function update (id, params) {
     return request({
-      url: `/admin/${id}`,
+      url: `/permission/${id}`,
       method: 'put',
       data: params
     })
@@ -26,7 +26,7 @@ export function update (id, params) {
 
   export function del (id) {
     return request({
-      url: `/admin/${id}`,
+      url: `/permission/${id}`,
       method: 'delete',
     })
   }

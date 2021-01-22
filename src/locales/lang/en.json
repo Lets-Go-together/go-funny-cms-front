@@ -1,5 +1,6 @@
 {
     "message": "hello i18n !!",
     "add": "添加",
-    "edit": "编辑"
+    "edit": "编辑",
+    "delete": "删除"
   }

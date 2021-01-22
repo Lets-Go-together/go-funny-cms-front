@@ -29,7 +29,7 @@
         </a-form-model-item>
 
         <a-form-model-item :wrapper-col="{ span: 16, offset: 6 }">
-            <a-button type="primary" @click="onSubmit">确认</a-button>
+            <a-button type="primary" @click="onSubmit" :loading="loading">确认</a-button>
             <a-button style="margin-left: 10px;">取消</a-button>
         </a-form-model-item>
     </a-form-model>
@@ -86,16 +86,16 @@ export default {
                 ],
                 description: [{ required: true, message: '请输入管理员的描述', trigger: 'blur' }]
             },
-            loading: false
+            loading: false,
         };
     },
     methods: {
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
                 if (valid) {
+                    this.loading = true
                     this.$emit('addSubmit', this.modelForm);
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });
@@ -103,7 +103,6 @@ export default {
     },
     created() {
         this.modelForm = this.formData;
-        console.log(this.form);
     }
 };
 </script>
