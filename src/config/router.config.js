@@ -39,7 +39,7 @@ export const asyncRouterMap = [
         meta: { title: '权限管理', icon: 'user' },
         children: [
           {
-            path: '/admin',
+            path: '',
             name: 'AdminList',
             component: () => import('@/views/auth/admin/Index'),
             meta: { title: '管理员管理', keepAlive: true }

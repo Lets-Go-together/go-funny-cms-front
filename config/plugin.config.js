@@ -46,7 +46,7 @@ const themePluginOption = {
 }
 
 const createThemeColorReplacerPlugin = () => new ThemeColorReplacer(themePluginOption)
-const createCompressionWebpackPlugin = () => new CompressionWebpackPlugin()
+// const createCompressionWebpackPlugin = () => new CompressionWebpackPlugin()
 
 module.exports = createThemeColorReplacerPlugin
-module.exports = createCompressionWebpackPlugin
+// module.exports = createCompressionWebpackPlugin

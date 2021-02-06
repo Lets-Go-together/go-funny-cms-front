@@ -38,6 +38,11 @@ const errorHandler = (error) => {
       }
     }
   }
+  
+  notification.error({
+    message: 'Server Error',
+    description: ''
+  })
   return Promise.reject(error)
 }
 
@@ -59,7 +64,6 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use(({data}) => {
-  console.log(data)
   if (data.status == 200) {
     return data
   }
@@ -70,7 +74,7 @@ request.interceptors.response.use(({data}) => {
     description: message,
     duration: 4
   })
-  throw new Error(message)
+  Promise.reject(message)
 }, errorHandler)
 
 const installer = {

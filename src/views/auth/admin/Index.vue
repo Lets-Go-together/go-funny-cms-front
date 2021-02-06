@@ -34,7 +34,7 @@
                                 <div>{{ item.updated_at }}</div>
                             </div>
                         </a-col>
-                        <a-col :span="2">
+                        <a-col :span="3">
                             <div class="operation">
                                 <a-button type="link" @click="edit(item)">{{ $t('edit') }}</a-button>
                                 <a-dropdown>
@@ -140,11 +140,12 @@ export default {
             } else {
                 operate = add(modelForm);
             }
-            operate.then(data => {
+            return operate.then(data => {
                 this.formModue.visible = false;
                 this.$message.success(data.message);
                 this.getList();
-            });
+                console.log(33)
+            })
         },
 
         edit(item) {

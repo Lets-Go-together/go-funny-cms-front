@@ -13,15 +13,15 @@
         </a-form-model-item>
 
         <a-form-model-item label="Phone" prop="phone">
-            <a-input v-model="modelForm.phone" />
+            <a-input v-model="modelForm.phone" autocomplete="phone" />
         </a-form-model-item>
 
         <a-form-model-item label="Password" prop="password">
-            <a-input type="password" v-model="modelForm.password" />
+            <a-input type="text" v-model="modelForm.password" autocomplete="password" />
         </a-form-model-item>
 
         <a-form-model-item label="Confirm Password" prop="confirm_password">
-            <a-input type="password" v-model="modelForm.confirm_password" />
+            <a-input type="text" v-model="modelForm.confirm_password" />
         </a-form-model-item>
 
         <a-form-model-item label="Desccription" prop="description">
@@ -84,7 +84,7 @@ export default {
                     { validator: validatePassword, trigger: 'blur' },
                     { validator: validateConfirmPassword, trigger: 'blur' }
                 ],
-                description: [{ required: true, message: '请输入管理员的描述', trigger: 'blur' }]
+                // description: [{ required: true, message: '请输入管理员的描述', trigger: 'blur' }]
             },
             loading: false,
         };
@@ -94,7 +94,9 @@ export default {
             this.$refs.ruleForm.validate(valid => {
                 if (valid) {
                     this.loading = true
-                    this.$emit('addSubmit', this.modelForm);
+                    this.$emit('addSubmit', this.modelForm)
+                    console.log(22)
+
                 } else {
                     return false;
                 }
