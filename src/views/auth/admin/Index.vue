@@ -35,7 +35,7 @@
                             </div>
                         </a-col>
                         <a-col :span="3">
-                            <div class="operation">
+                            <div class="operation" v-if="item.account != 'admin'">
                                 <a-button type="link" @click="edit(item)">{{ $t('edit') }}</a-button>
                                 <a-dropdown>
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
@@ -52,9 +52,11 @@
             </a-list>
         </a-card>
 
-        <a-modal :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="confirmLoading" @cancel="formModue.visible = false" :footer="null">
-            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
-        </a-modal>
+        <!-- <a-modal :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="confirmLoading" @cancel="formModue.visible = false" :footer="null">
+        </a-modal> -->
+        <a-drawer :title="formModue.title" width="40%" :visible="formModue.visible" :footer="null" @close="formModue.visible = false">
+            <module-form ref="moduleForm" v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
+        </a-drawer>
     </page-header-wrapper>
 </template>
 
@@ -127,6 +129,7 @@ export default {
         del(id) {
             del(id).then(data => {
                 this.$message.success(data.message);
+                this.getList()
             });
         },
 
@@ -140,11 +143,12 @@ export default {
             } else {
                 operate = add(modelForm);
             }
-            return operate.then(data => {
-                this.formModue.visible = false;
+            operate.then(data => {
                 this.$message.success(data.message);
                 this.getList();
-                console.log(33)
+                this.formModue.visible = false;
+            }).catch(() => {
+                // this.$refs.moduleForm.loading = false
             })
         },
 

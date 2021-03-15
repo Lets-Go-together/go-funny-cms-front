@@ -16,9 +16,9 @@ export function add (params) {
     })
   }
 
-export function update (id, params) {
+export function update (params) {
     return request({
-      url: `/permission/${id}`,
+      url: `/permission`,
       method: 'put',
       data: params
     })
@@ -28,5 +28,12 @@ export function update (id, params) {
     return request({
       url: `/permission/${id}`,
       method: 'delete',
+    })
+  }
+
+  export function getPermisstionTree () {
+    return request({
+      url: `/permission/tree`,
+      method: 'get',
     })
   }

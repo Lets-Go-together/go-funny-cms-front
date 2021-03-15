@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@ant-design-vue/pro-layout": "^1.0.1",
     "@antv/data-set": "^0.10.2",
-    "ant-design-vue": "^1.6.2",
+    "ant-design-vue": "^1.7.3",
     "axios": "^0.21.1",
     "core-js": "^3.1.2",
     "enquire.js": "^2.1.6",

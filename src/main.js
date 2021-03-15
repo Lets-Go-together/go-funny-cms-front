@@ -10,12 +10,13 @@ import i18n from './locales/i18n'
 import { VueAxios } from './utils/request'
 import ProLayout, { PageHeaderWrapper } from '@ant-design-vue/pro-layout'
 import themePluginConfig from '../config/themePluginConfig'
-import { FormModel } from 'ant-design-vue';
+import Antd from 'ant-design-vue/es';
+import 'ant-design-vue/dist/antd.css';
 
-Vue.use(FormModel)
+Vue.use(Antd)
 
 import bootstrap from './core/bootstrap'
-import './core/lazy_use' // use lazy load components
+// import './core/lazy_use' // use lazy load components
 import './permission' // permission control
 import './utils/filter' // global filter
 import './global.less' // global style

@@ -34,12 +34,11 @@ export const asyncRouterMap = [
     
       {
         path: '/admin',
-        redirect: '/admin',
         component: RouteView,
         meta: { title: '权限管理', icon: 'user' },
         children: [
           {
-            path: '',
+            path: '/',
             name: 'AdminList',
             component: () => import('@/views/auth/admin/Index'),
             meta: { title: '管理员管理', keepAlive: true }
