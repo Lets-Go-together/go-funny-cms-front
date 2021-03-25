@@ -44,8 +44,8 @@
             </div>
         </a-card>
 
-        <a-drawer :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false" :footer="null">
-            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
+        <a-drawer :title="formModue.title" width="800px"  :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
+            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit" @close="formModue.visible = false"></module-form>
         </a-drawer>
     </page-header-wrapper>
 </template>
@@ -172,7 +172,7 @@ export default {
                 title: '添加',
                 visible: true,
                 formData: {}
-            });
+          });
         },
 
         /**

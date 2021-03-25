@@ -34,20 +34,20 @@
         <a-form-model-item label="是否禁用" prop="status">
             <a-switch v-model="modelForm.status" checked-children="是" un-checked-children="否" default-checked  allow-clear/>
         </a-form-model-item>
-
+        
         <a-form-model-item label="是否隐藏" prop="hidden">
             <a-switch v-model="modelForm.hidden" checked-children="是" un-checked-children="否" default-checked  allow-clear/>
         </a-form-model-item>
 
         <a-form-model-item :wrapper-col="{ offset: 4 }">
             <a-button type="primary" @click="onSubmit" :loading="loading">确认</a-button>
-            <!-- <a-button style="margin-left: 10px;">取消</a-button> -->
+            <a-button style="margin-left: 10px;" @click="$emit('close')">取消</a-button>
         </a-form-model-item>
     </a-form-model>
 </template>
 <script>
 import UploadImage from '@/components/tools/UploadImage';
-import { getPermisstionTree, update } from '@/api/permission';
+import { getPermisstionTree, update, add } from '@/api/permission';
 
 export default {
     name: 'ModuleForm',
@@ -74,11 +74,16 @@ export default {
     methods: {
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
-                if (valid) {
-                } else {
-                    return false;
-                }
+                return valid
             });
+
+            this.loading = true
+            update(this.modelForm).then((res) => {
+                console.log(res)
+                this.loading = false
+            }).catch(() => {
+                this.loading = false
+            })
 
             update(this.modelForm).then(() => {
                 console.log(arguments)
@@ -100,6 +105,8 @@ export default {
                 return permission;
             });
         }
+
+        
     },
 
     created() {
