@@ -30,7 +30,7 @@
 
         <a-form-model-item :wrapper-col="{ span: 16, offset: 6 }">
             <a-button type="primary" @click="onSubmit" :loading="loading">确认</a-button>
-            <a-button style="margin-left: 10px;">取消</a-button>
+            <!-- <a-button style="margin-left: 10px;">取消</a-button> -->
         </a-form-model-item>
     </a-form-model>
 </template>
@@ -95,8 +95,6 @@ export default {
                 if (valid) {
                     this.loading = true
                     this.$emit('addSubmit', this.modelForm)
-                    console.log(22)
-
                 } else {
                     return false;
                 }

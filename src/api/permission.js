@@ -30,3 +30,9 @@ export function del(id) {
         method: 'delete',
     })
 }
+export function getPermisstionTree() {
+    return request({
+        url: `/permission/tree`,
+        method: 'get',
+    })
+}
