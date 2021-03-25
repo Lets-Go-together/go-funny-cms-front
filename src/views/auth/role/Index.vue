@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { getList, add, update, del } from '@/api/permission';
+import { getList, add, update, del } from '@/api/role';
 import PageMixin from '@/mixins/PageMixin';
 import ModuleForm from './modules/form';
 export default {
@@ -60,7 +60,8 @@ export default {
     data() {
         return {
             filters: {
-                keyword: ''
+                name: '',
+                url: ''
             },
             columns: [
                 {
@@ -69,26 +70,9 @@ export default {
                     key: 'id'
                 },
                 {
-                    title: '权限名称',
+                    title: '角色名称',
                     dataIndex: 'name',
                     key: 'name'
-                },
-                {
-                    title: 'icon',
-                    scopedSlots: { customRender: 'icon' },
-                    dataIndex: 'icon',
-                    key: 'icon'
-                },
-                {
-                    title: 'Url',
-                    dataIndex: 'url',
-                    key: 'url'
-                },
-                {
-                    title: '方法',
-                    dataIndex: 'method',
-                    key: 'method',
-                    scopedSlots: { customRender: 'method' }
                 },
                 {
                     title: '状态',
@@ -97,10 +81,9 @@ export default {
                     key: 'status'
                 },
                 {
-                    title: '是否隐藏',
-                    dataIndex: 'hidden',
-                    scopedSlots: { customRender: 'hidden' },
-                    key: 'hidden'
+                    title: '角色描述',
+                    dataIndex: 'description',
+                    key: 'description'
                 },
                 {
                     title: '创建时间',

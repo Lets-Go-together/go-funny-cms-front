@@ -48,11 +48,15 @@ export const asyncRouterMap = [
             name: 'Permission',
             component: () => import('@/views/auth/permission/Index'),
             meta: { title: '权限管理', keepAlive: true }
+          },
+          {
+            path: '/role',
+            name: 'Role',
+            component: () => import('@/views/auth/role/Index'),
+            meta: { title: '角色管理', keepAlive: true }
           }
         ]
       },
-
-
 
       // account
       {
