@@ -47,9 +47,9 @@
             </div>
         </a-card>
 
-        <a-modal :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="formModue.loadding" @cancel="formModue.visible = false" :footer="null">
-            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
-        </a-modal>
+        <a-drawer :title="formModue.title" width="800px"  :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
+            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit" @close="formModue.visible = false"></module-form>
+        </a-drawer>
     </page-header-wrapper>
 
 </template>
@@ -178,13 +178,6 @@ export default {
                 visible: true,
                 formData: {}
           });
-        },
-
-        /**
-         * 编辑完成操作
-         */
-        addSubmit() {
-
         }
     },
     mounted() {
