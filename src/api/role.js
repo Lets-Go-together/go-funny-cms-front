@@ -34,7 +34,7 @@ export function update (params) {
 
   export function del (id) {
     return request({
-      url: `/permission/${id}`,
+      url: `/role/${id}`,
       method: 'delete',
     })
   }

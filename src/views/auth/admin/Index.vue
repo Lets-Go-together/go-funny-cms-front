@@ -41,7 +41,9 @@
                                     <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
                                     <a-menu slot="overlay">
                                         <a-menu-item>
-                                            <a href="javascript:;" @click="del(item.id)">{{ $t('delete') }}</a>
+                                            <a-popconfirm :title="$t('confirm_delete')" @confirm="del(item.id)" ok-text="Yes" cancel-text="No">
+                                                <a href="#">{{ $t('delete') }}</a>
+                                            </a-popconfirm>
                                         </a-menu-item>
                                     </a-menu>
                                 </a-dropdown>

@@ -69,12 +69,15 @@ request.interceptors.response.use(({data}) => {
     return data
   }
 
+  console.log(data)
+
   let message = data.message || "系统错误，请稍后重试"
   notification.error({
     message: '提示',
     description: message,
     duration: 4
   })
+  throw new Error(message)
   Promise.reject(message)
 }, errorHandler)
 

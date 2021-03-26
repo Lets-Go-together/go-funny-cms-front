@@ -36,6 +36,7 @@
 <script>
 import UploadImage from '@/components/tools/UploadImage';
 import { getRole, update } from '@/api/role';
+import { getPermisstionTree } from '@/api/permission';
 
 export default {
     name: 'ModuleForm',
@@ -75,13 +76,12 @@ export default {
             });
             
             let params = JSON.parse(JSON.stringify(this.modelForm))
-            Object.assign(params, {status: params.status ? 1 : 2})
+            Object.assign(params, {status: params.status ? 2 : 1})
             update(params).then(() => {
                 this.$message.success('Success');
                 this.loading = false
                 this.$emit('success')
             }).catch(() => {
-                this.$message.success('Server Error');
                 this.loading = false
             })
         },
@@ -89,20 +89,29 @@ export default {
         /**
          * 获取权限树节
          */
-        async getRole() {
-            await getRole({id: this.formData.id}).then(({ data }) => {
-                const { all_permissions, permission_ids, id, name, description, status } = data
-                const form = {id: id, name: name, description: description, permission_ids: permission_ids ? permission_ids : [], status: status == 2 ? false : true}
+        async getRole(id) {
+            await getRole({id: id}).then(({ data }) => {
+                const { permission_ids, id, name, description, status } = data
+                const form = {id: id, name: name, description: description, permission_ids: permission_ids ? permission_ids : [], status: status == 2 ? true : false}
                 this.$set(this, 'modelForm', form)
-                Object.assign(this, {permissions: all_permissions})
-                console.log(this.modelForm)
+            });
+        },
+
+        /**
+         * 获取权限树节
+         */
+        async getPermissionTree() {
+            await getPermisstionTree().then(({ data }) => {
+                this.permissions = data;
             });
         }
     },
 
-    created() {
+    async mounted() {
         // this.modelForm = this.formData;
-        this.getRole();
+
+        await this.getPermissionTree()
+        this.formData.id && this.getRole(this.formData.id);
     }
 };
 </script>

@@ -35,7 +35,9 @@
                             <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
                             <a-menu slot="overlay">
                                 <a-menu-item>
-                                    <a href="javascript:;" @click="del(record.id)">{{ $t('delete') }}</a>
+                                    <a-popconfirm :title="$t('confirm_delete')" @confirm="del(record.id)" ok-text="Yes" cancel-text="No">
+                                        <a href="#">{{ $t('delete') }}</a>
+                                    </a-popconfirm>
                                 </a-menu-item>
                             </a-menu>
                         </a-dropdown>
@@ -45,7 +47,7 @@
         </a-card>
 
         <a-drawer :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false" :footer="null">
-            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
+            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @success="success"></module-form>
         </a-drawer>
     </page-header-wrapper>
 </template>
@@ -161,24 +163,12 @@ export default {
         /**
          * edit
          */
-        addSubmit(modelForm) {
-            let operate;
-            if (modelForm.id) {
-                let id = modelForm.id;
-                let newModuleForm = JSON.parse(JSON.stringify(modelForm));
-                delete newModuleForm.id;
-                operate = update(id, newModuleForm);
-            } else {
-                operate = add(modelForm);
-            }
-            operate
-                .then(data => {
-                    this.$message.success(data.message);
-                    this.getList();
-                    this.formModue.visible = false;
-                })
-                .catch(() => {});
+        success() {
+            this.formModue.visible = false
+            this.getList()
         }
+
+        
     },
     mounted() {
         this.getList();
