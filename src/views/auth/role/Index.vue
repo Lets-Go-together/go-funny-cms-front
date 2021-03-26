@@ -8,7 +8,7 @@
                     </a-form-item>
                     <a-form-item label="">
                         <a-button-group>
-                            <a-button type="primary" icon="search" @click="getList()" :loading="tableLoading">查询</a-button>
+                            <a-button type="primary" icon="search" @click="getList()" :loading="tableLoading" allow-clear>查询</a-button>
                             <a-button type="primary" icon="add" @click="add()" :loading="tableLoading">添加</a-button>
                         </a-button-group>
                     </a-form-item>

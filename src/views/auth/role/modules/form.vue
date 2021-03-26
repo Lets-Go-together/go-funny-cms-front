@@ -11,6 +11,7 @@
                 :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                 :tree-data="permissions"
                 tree-checkable
+                :replaceFields="replaceFields"
                 placeholder="Please select" />
         </a-form-model-item>
 
@@ -19,14 +20,13 @@
         </a-form-model-item>
 
         <a-form-model-item label="角色描述" prop="description">
-            <a-input v-model="modelForm.url" allow-clear />
+            <a-textarea v-model="modelForm.url" allow-clear />
         </a-form-model-item>
 
         <a-form-model-item label="是否禁用" prop="status">
             <a-switch v-model="modelForm.status" checked-children="是" un-checked-children="否" default-checked  allow-clear/>
         </a-form-model-item>
 
-    
         <a-form-model-item :wrapper-col="{ offset: 4 }">
             <a-button type="primary" @click="onSubmit" :loading="loading">确认</a-button>
             <!-- <a-button style="margin-left: 10px;">取消</a-button> -->
@@ -56,7 +56,13 @@ export default {
             rules: {},
             loading: false,
             availableMethods: ['GET', 'POST', 'PUT', 'DELETE', 'ANY'],
-            permissions: []
+            permissions: [],
+            replaceFields: {
+                children:'children', 
+                title:'name', 
+                key: 'id',
+                value: 'id'
+            }
         };
     },
     methods: {
@@ -67,9 +73,16 @@ export default {
                     return false;
                 }
             });
-
-            update(this.modelForm).then(() => {
-                console.log(arguments)
+            
+            let params = JSON.parse(JSON.stringify(this.modelForm))
+            Object.assign(params, {status: params.status ? 1 : 2})
+            update(params).then(() => {
+                this.$message.success('Success');
+                this.loading = false
+                this.$emit('success')
+            }).catch(() => {
+                this.$message.success('Server Error');
+                this.loading = false
             })
         },
 
@@ -78,20 +91,17 @@ export default {
          */
         async getRole() {
             await getRole({id: this.formData.id}).then(({ data }) => {
-                this.permissions = data;
-            });
-
-            this.permissions = this.permissions.map(permission => {
-                permission.key = permission.id = permission.id;
-                permission.value = permission.id = permission.id;
-                permission.title = permission.name;
-                return permission;
+                const { all_permissions, permission_ids, id, name, description, status } = data
+                const form = {id: id, name: name, description: description, permission_ids: permission_ids ? permission_ids : [], status: status == 2 ? false : true}
+                this.$set(this, 'modelForm', form)
+                Object.assign(this, {permissions: all_permissions})
+                console.log(this.modelForm)
             });
         }
     },
 
     created() {
-        this.modelForm = this.formData;
+        // this.modelForm = this.formData;
         this.getRole();
     }
 };

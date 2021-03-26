@@ -45,7 +45,7 @@
         </a-card>
 
         <a-drawer :title="formModue.title" width="800px"  :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
-            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit" @close="formModue.visible = false"></module-form>
+            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @success="addSubmit" @close="formModue.visible = false"></module-form>
         </a-drawer>
     </page-header-wrapper>
 </template>
@@ -178,23 +178,8 @@ export default {
         /**
          * edit
          */
-        addSubmit(modelForm) {
-            let operate;
-            if (modelForm.id) {
-                let id = modelForm.id;
-                let newModuleForm = JSON.parse(JSON.stringify(modelForm));
-                delete newModuleForm.id;
-                operate = update(id, newModuleForm);
-            } else {
-                operate = add(modelForm);
-            }
-            operate
-                .then(data => {
-                    this.$message.success(data.message);
-                    this.getList();
-                    this.formModue.visible = false;
-                })
-                .catch(() => {});
+        success() {
+            this.getList()
         }
     },
     mounted() {

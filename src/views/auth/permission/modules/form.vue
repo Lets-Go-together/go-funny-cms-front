@@ -10,6 +10,7 @@
                 style="width: 100%"
                 :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                 :tree-data="permissions"
+                :replaceFields="replaceFields"
                 placeholder="Please select" />
         </a-form-model-item>
 
@@ -68,7 +69,13 @@ export default {
             rules: {},
             loading: false,
             availableMethods: ['GET', 'POST', 'PUT', 'DELETE', 'ANY'],
-            permissions: []
+            permissions: [],
+            replaceFields: {
+                children:'children', 
+                title:'name', 
+                key: 'id',
+                value: 'id'
+            }
         };
     },
     methods: {
@@ -79,14 +86,12 @@ export default {
 
             this.loading = true
             update(this.modelForm).then((res) => {
-                console.log(res)
+                this.$message.success('Success');
                 this.loading = false
+                this.$emit('success')
             }).catch(() => {
+                this.$message.success('Server Error');
                 this.loading = false
-            })
-
-            update(this.modelForm).then(() => {
-                console.log(arguments)
             })
         },
 
@@ -96,13 +101,6 @@ export default {
         async getPermissionTree() {
             await getPermisstionTree().then(({ data }) => {
                 this.permissions = data;
-            });
-
-            this.permissions = this.permissions.map(permission => {
-                permission.key = permission.id = permission.id;
-                permission.value = permission.id = permission.id;
-                permission.title = permission.name;
-                return permission;
             });
         }
 
