@@ -10,7 +10,7 @@ export function getList (params) {
 
 export function add (params) {
     return request({
-      url: "/permission",
+      url: "/permission/store",
       method: 'post',
       data: params
     })
@@ -26,7 +26,7 @@ export function getRole (params) {
 
 export function update (params) {
     return request({
-      url: `/role`,
+      url: `/role/save`,
       method: 'put',
       data: params
     })
@@ -34,8 +34,9 @@ export function update (params) {
 
   export function del (id) {
     return request({
-      url: `/role/${id}`,
+      url: `/role/delete`,
       method: 'delete',
+      data: {id: id}
     })
   }
 

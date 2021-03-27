@@ -37,6 +37,7 @@
 <script>
 import { validatePhone, validatePassword, validateConfirmPassword } from '@/utils/validate';
 import UploadImage from '@/components/tools/UploadImage';
+import { getList, add, update, del } from '@/api/admin';
 
 export default {
     name: 'ModuleForm',
@@ -84,7 +85,7 @@ export default {
                     { validator: validatePassword, trigger: 'blur' },
                     { validator: validateConfirmPassword, trigger: 'blur' }
                 ],
-                // description: [{ required: true, message: '请输入管理员的描述', trigger: 'blur' }]
+                description: [{ required: true, message: '请输入管理员的描述', trigger: 'blur' }]
             },
             loading: false,
         };
@@ -94,7 +95,18 @@ export default {
             this.$refs.ruleForm.validate(valid => {
                 if (valid) {
                     this.loading = true
-                    this.$emit('addSubmit', this.modelForm)
+                    let operate;
+                    if (this.modelForm.id) {
+                        operate = update(this.modelForm.id, this.modelForm);
+                    } else {
+                        operate = add(this.modelForm);
+                    }
+                    operate.then(data => {
+                        this.$message.success(data.message);
+                        this.$emit('success')
+                    }).catch(() => {
+                        this.loading = false
+                    })
                 } else {
                     return false;
                 }

@@ -10,7 +10,7 @@ export function getList (params) {
 
 export function add (params) {
     return request({
-      url: "/admin",
+      url: "/admin/store",
       method: 'post',
       data: params
     })
@@ -18,7 +18,7 @@ export function add (params) {
 
 export function update (id, params) {
     return request({
-      url: `/admin/${id}`,
+      url: `/admin/save`,
       method: 'put',
       data: params
     })
@@ -26,7 +26,8 @@ export function update (id, params) {
 
   export function del (id) {
     return request({
-      url: `/admin/${id}`,
+      url: `/admin/delete`,
       method: 'delete',
+      data: {id: id}
     })
   }

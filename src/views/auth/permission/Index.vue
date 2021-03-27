@@ -47,7 +47,7 @@
         </a-card>
 
         <a-drawer :title="formModue.title" width="800px"  :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
-            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @success="addSubmit" @close="formModue.visible = false"></module-form>
+            <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @success="success" @close="formModue.visible = false"></module-form>
         </a-drawer>
     </page-header-wrapper>
 </template>
@@ -181,6 +181,7 @@ export default {
          * edit
          */
         success() {
+            this.formModue.visible = false
             this.getList()
         }
     },

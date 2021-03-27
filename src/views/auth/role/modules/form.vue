@@ -20,7 +20,7 @@
         </a-form-model-item>
 
         <a-form-model-item label="角色描述" prop="description">
-            <a-textarea v-model="modelForm.url" allow-clear />
+            <a-textarea v-model="modelForm.description" allow-clear />
         </a-form-model-item>
 
         <a-form-model-item label="是否禁用" prop="status">
@@ -63,6 +63,14 @@ export default {
                 title:'name', 
                 key: 'id',
                 value: 'id'
+            },
+            rules: {
+                name: [{ required: true, message: "请输入角色名称", tigger: 'blur' }],
+                description: [
+                    { required: true, message: "请输入角色描述", tigger: 'blur' },
+                    { type: "string", message: "角色描述最长不超过10个字符", min: 1, max: 10, tigger: 'blur' },
+                ],
+                // status: [{ type: "boolean", required: true, tigger: 'blur' }],
             }
         };
     },
@@ -70,20 +78,19 @@ export default {
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
                 if (valid) {
+                    let params = JSON.parse(JSON.stringify(this.modelForm))
+                    Object.assign(params, {status: params.status ? 2 : 1})
+                    update(params).then(() => {
+                        this.$message.success('Success');
+                        this.loading = false
+                        this.$emit('success')
+                    }).catch(() => {
+                        this.loading = false
+                    })
                 } else {
                     return false;
                 }
             });
-            
-            let params = JSON.parse(JSON.stringify(this.modelForm))
-            Object.assign(params, {status: params.status ? 2 : 1})
-            update(params).then(() => {
-                this.$message.success('Success');
-                this.loading = false
-                this.$emit('success')
-            }).catch(() => {
-                this.loading = false
-            })
         },
 
         /**
@@ -102,7 +109,9 @@ export default {
          */
         async getPermissionTree() {
             await getPermisstionTree().then(({ data }) => {
-                this.permissions = data;
+                this.permissions = data.filter((item) => {
+                    return item.id != 1
+                });
             });
         }
     },

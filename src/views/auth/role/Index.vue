@@ -143,7 +143,7 @@ export default {
          * 删除
          */
         del(id) {
-            del(id).then(data => {
+            del(parseInt(id)).then(data => {
                 this.$message.success(data.message);
                 this.getList();
             });

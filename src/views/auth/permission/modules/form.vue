@@ -66,7 +66,13 @@ export default {
     data() {
         return {
             modelForm: {},
-            rules: {},
+            rules: {
+                p_id: [{ required: true, message: "请选择父节点", tigger: 'blur' }],
+                name: [{ required: true, message: "请输入权限名称", tigger: 'blur' }],
+                url: [{ required: true, message: "请输入url", tigger: 'blur' }],
+                icon: [{ required: true, message: "请输入icon", tigger: 'blur' }],
+                method: [{ required: true, message: "请选择请求方法", tigger: 'blur' }],
+            },
             loading: false,
             availableMethods: ['GET', 'POST', 'PUT', 'DELETE', 'ANY'],
             permissions: [],
@@ -81,18 +87,25 @@ export default {
     methods: {
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
-                return valid
-            });
+                if(valid) {
+                    if(this.modelForm.p_id == this.modelForm.id) {
+                        this.$message.success('父节点设置错误: 不允许设置自己');
+                        return
+                    }
 
-            this.loading = true
-            update(this.modelForm).then((res) => {
-                this.$message.success('Success');
-                this.loading = false
-                this.$emit('success')
-            }).catch(() => {
-                this.$message.success('Server Error');
-                this.loading = false
-            })
+                    this.loading = true
+                    let params = JSON.parse(JSON.stringify(this.modelForm))
+                    Object.assign(params, {status: params.status ? 2 : 1, hidden: params.hidden ? 2 : 1})
+
+                    update(params).then((res) => {
+                        this.$message.success('Success');
+                        this.loading = false
+                        this.$emit('success')
+                    }).catch(() => {
+                        this.loading = false
+                    })
+                }
+            });
         },
 
         /**
@@ -102,13 +115,14 @@ export default {
             await getPermisstionTree().then(({ data }) => {
                 this.permissions = data;
             });
-        }
-
-        
+        },
     },
 
-    created() {
-        this.modelForm = this.formData;
+    mounted() {
+        this.modelForm = Object.assign(this.formData, {
+            status: this.formData.status == 1 ? true : false,
+            hidden: this.formData.hidden == 1 ? true : false,
+        });
         this.getPermissionTree();
     }
 };

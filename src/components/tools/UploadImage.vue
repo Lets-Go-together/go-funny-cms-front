@@ -60,11 +60,13 @@ export default {
         this.url = url
         this.data.token = token
         this.host = host
-        this.data.key = upload_dir + randomString()
+        this.upload_dir = upload_dir
+        this.data.key = this.upload_dir + randomString()
       })
     },
 
     handleChange(info) {
+      this.data.key = this.upload_dir + randomString()
       if (info.file.status === 'uploading') {
         this.loading = true
         return

@@ -24,7 +24,8 @@
                     <a-row type="flex" justify="space-between" align="middle">
                         <a-col :span="6">
                             <a-list-item-meta :description="`描述: ${item.description}`">
-                                <a slot="title" href="javascript:;">{{ item.account }}</a>
+                                <a slot="title" href="javascript:;">{{ item.account }} <br> &nbsp;<span>{{item.email}}</span></a>
+                                
                                 <a-avatar shape="square" slot="avatar" :src="item.avatar" :size="64" />
                             </a-list-item-meta>
                         </a-col>
@@ -57,7 +58,7 @@
         <!-- <a-modal :title="formModue.title" width="40%" :visible="formModue.visible" :confirm-loading="confirmLoading" @cancel="formModue.visible = false" :footer="null">
         </a-modal> -->
         <a-drawer :title="formModue.title" width="40%" :visible="formModue.visible" :footer="null" @close="formModue.visible = false">
-            <module-form ref="moduleForm" v-if="formModue.visible" :formData.sync="formModue.formData" @addSubmit="addSubmit"></module-form>
+            <module-form ref="moduleForm" v-if="formModue.visible" :formData.sync="formModue.formData" @success="success"></module-form>
         </a-drawer>
     </page-header-wrapper>
 </template>
@@ -135,23 +136,9 @@ export default {
             });
         },
 
-        /**
-         * 提交用户资料
-         */
-        addSubmit(modelForm) {
-            let operate;
-            if (modelForm.id) {
-                operate = update(modelForm.id, modelForm);
-            } else {
-                operate = add(modelForm);
-            }
-            operate.then(data => {
-                this.$message.success(data.message);
-                this.getList();
-                this.formModue.visible = false;
-            }).catch(() => {
-                // this.$refs.moduleForm.loading = false
-            })
+        success() {
+            this.formModue.visible = false
+            this.getList()
         },
 
         edit(item) {
