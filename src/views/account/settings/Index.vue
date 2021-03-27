@@ -15,11 +15,11 @@
                 基本设置
               </router-link>
             </a-menu-item>
-            <a-menu-item key="/account/settings/security">
+            <!-- <a-menu-item key="/account/settings/security">
               <router-link :to="{ name: 'SecuritySettings' }">
                 安全设置
               </router-link>
-            </a-menu-item>
+            </a-menu-item> -->
             <a-menu-item key="/account/settings/custom">
               <router-link :to="{ name: 'CustomSettings' }">
                 个性化

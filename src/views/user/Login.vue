@@ -100,7 +100,7 @@ export default {
         // this.requiredTwoStepCaptcha = true
     },
     methods: {
-        ...mapActions(['Login', 'Logout']),
+        ...mapActions(['Login', 'Logout', 'GetInfo']),
         // handler
         handleUsernameOrEmail(rule, value, callback) {
             const { state } = this;
@@ -139,6 +139,7 @@ export default {
                         .then(res => this.loginSuccess(res))
                         .finally(() => {
                             state.loginBtn = false;
+                            GetInfo()
                         });
                 } else {
                     setTimeout(() => {
