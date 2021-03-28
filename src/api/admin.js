@@ -24,10 +24,17 @@ export function update (id, params) {
     })
   }
 
-  export function del (id) {
+export function del (id) {
     return request({
       url: `/admin/delete`,
       method: 'delete',
       data: {id: id}
+    })
+  }
+
+export function getRoleTree() {
+    return request({
+      url: `/admin/tree`,
+      method: 'get'
     })
   }

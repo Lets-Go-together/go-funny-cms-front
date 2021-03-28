@@ -8,6 +8,17 @@
             <upload-image :imgUrl.sync="modelForm.avatar"></upload-image>
         </a-form-model-item>
 
+         <a-form-model-item label="用户角色" prop="permission_ids">
+            <a-tree-select
+                v-model="modelForm.role_ids"
+                style="width: 100%"
+                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                :tree-data="tree"
+                tree-checkable
+                :replaceFields="replaceFields"
+                placeholder="Please select" />
+        </a-form-model-item>
+
         <a-form-model-item label="Email" prop="email">
             <a-input v-model="modelForm.email" />
         </a-form-model-item>
@@ -37,7 +48,7 @@
 <script>
 import { validatePhone, validatePassword, validateConfirmPassword } from '@/utils/validate';
 import UploadImage from '@/components/tools/UploadImage';
-import { getList, add, update, del } from '@/api/admin';
+import { getRoleTree, add, update, del } from '@/api/admin';
 
 export default {
     name: 'ModuleForm',
@@ -88,6 +99,13 @@ export default {
                 description: [{ required: true, message: '请输入管理员的描述', trigger: 'blur' }]
             },
             loading: false,
+            tree: [],
+            replaceFields: {
+                children:'children', 
+                title:'name', 
+                key: 'id',
+                value: 'id'
+            },
         };
     },
     methods: {
@@ -111,9 +129,20 @@ export default {
                     return false;
                 }
             });
-        }
+        },
+
+        /**
+         * 获取权限树节
+         */
+        async getRoleTree() {
+            await getRoleTree().then(({ data }) => {
+                this.tree = data 
+            });
+        },
     },
-    created() {
+    async created() {
+        await this.getRoleTree()
+
         this.modelForm = this.formData;
     }
 };

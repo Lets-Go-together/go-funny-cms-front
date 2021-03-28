@@ -22,6 +22,14 @@
             <a-input type="url" v-model="modelForm.icon" allow-clear />
         </a-form-model-item>
 
+         <a-form-model-item label="排序" prop="weight">
+            <a-input-number v-model="modelForm.weight" allow-clear />
+        </a-form-model-item>
+
+         <a-form-model-item label="组件" prop="component">
+            <a-input v-model="modelForm.component" allow-clear />
+        </a-form-model-item>
+
         <a-form-model-item label="描述" prop="description">
             <a-textarea type="url" v-model="modelForm.description" allow-clear />
         </a-form-model-item>
@@ -105,7 +113,11 @@ export default {
          */
         async getMenuTree() {
             await getMenuTree().then(({ data }) => {
-                this.menus = data;
+                this.menus = [].concat({
+                    id: 1,
+                    name: "根节点",
+                    p_id: 0
+                }, ...data);
             });
         },
     },

@@ -27,6 +27,9 @@ const user = {
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
+    SET_MENUS: (state, menus) => {
+      state.menus = menus
+    },
     SET_INFO: (state, info) => {
       state.info = info
     }
@@ -65,6 +68,7 @@ const user = {
             // role.permissionList = role.permissions.map(permission => { return permission.permissionId })
             roles.permissionList = []
             commit('SET_ROLES', result.roles)
+            commit('SET_MENUS', result.menus)
             commit('SET_INFO', result)
 
           } else {

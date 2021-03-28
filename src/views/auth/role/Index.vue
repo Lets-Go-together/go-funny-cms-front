@@ -25,9 +25,8 @@
                         <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
                         <a-tag color="#f50" v-else>禁用</a-tag>
                     </span>
-                    <span slot="hidden" slot-scope="hidden">
-                        <a-tag color="#87d068" v-if="hidden == 1">是</a-tag>
-                        <a-tag color="#f50" v-else>否</a-tag>
+                    <span slot="menus" slot-scope="menus">
+                        <a-tag color="#87d068" v-for="item in menus.menus" :key="item">{{ item }}</a-tag>
                     </span>
                     <span slot="action" slot-scope="record">
                         <a-button type="link" @click="edit(record)">{{ $t('edit') }}</a-button>
@@ -86,6 +85,16 @@ export default {
                     title: '角色描述',
                     dataIndex: 'description',
                     key: 'description'
+                },
+                {
+                    title: '角色菜单',
+                    dataIndex: 'menu_ids',
+                    key: 'menu_ids'
+                },
+                {
+                    title: '菜单',
+                    scopedSlots: { customRender: 'menus' },
+                    key: 'menus'
                 },
                 {
                     title: '创建时间',

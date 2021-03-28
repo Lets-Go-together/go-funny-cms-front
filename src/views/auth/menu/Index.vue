@@ -4,7 +4,7 @@
             <div class="filters">
                 <a-form :form="filters" layout="inline">
                     <a-form-item label="">
-                        <a-input placeholder="Name | Url" v-model="filters.keyword"></a-input>
+                        <a-input placeholder="菜单名称" v-model="filters.keyword"></a-input>
                     </a-form-item>
                     <a-form-item label="">
                         <a-button-group>
@@ -77,6 +77,16 @@ export default {
                     scopedSlots: { customRender: 'icon' },
                     dataIndex: 'icon',
                     key: 'icon'
+                },
+                {
+                    title: '位置',
+                    dataIndex: 'weight',
+                    key: 'weight'
+                },
+                {
+                    title: '组件',
+                    dataIndex: 'component',
+                    key: 'component'
                 },
                 {
                     title: '状态',

@@ -122,7 +122,8 @@ export default {
                 form: { validateFields },
                 state,
                 customActiveKey,
-                Login
+                Login,
+                GetInfo
             } = this;
 
             state.loginBtn = true;
@@ -135,12 +136,15 @@ export default {
                     delete loginParams.username;
                     loginParams.account = values.username;
                     loginParams.password = values.password;
-                    Login(loginParams)
-                        .then(res => this.loginSuccess(res))
-                        .finally(() => {
-                            state.loginBtn = false;
-                            GetInfo()
-                        });
+                    let loginAction = Login(loginParams);
+                    let getInfoAction = GetInfo()
+                    
+                    Promise.all([loginAction, getInfoAction]).then(() => {
+                        this.loginSuccess()
+                    }).finally(() => {
+                        state.loginBtn = false;
+                    })
+                    
                 } else {
                     setTimeout(() => {
                         state.loginBtn = false;

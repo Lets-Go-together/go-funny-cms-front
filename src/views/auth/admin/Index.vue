@@ -35,6 +35,11 @@
                                 <div>{{ item.updated_at }}</div>
                             </div>
                         </a-col>
+                        <a-col :span="6" style="text-align">
+                            <div class="updated_at">
+                                <a-tag v-for="role in item.roles" :key="role" color="green">{{ role }}</a-tag>
+                            </div>
+                        </a-col>
                         <a-col :span="3">
                             <div class="operation" v-if="item.account != 'admin'">
                                 <a-button type="link" @click="edit(item)">{{ $t('edit') }}</a-button>
@@ -117,8 +122,9 @@ export default {
 
             getList(params).then(({ data }) => {
                 this.data = data.list;
+            }).finally(() => {
                 this.tableLoading = false;
-            });
+            })
         },
 
         add() {

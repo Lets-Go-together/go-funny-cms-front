@@ -15,6 +15,17 @@
                 placeholder="Please select" />
         </a-form-model-item>
 
+        <a-form-model-item label="当前菜单" prop="permission_ids">
+            <a-tree-select
+                v-model="modelForm.menu_ids"
+                style="width: 100%"
+                :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+                :tree-data="menus"
+                tree-checkable
+                :replaceFields="replaceFields"
+                placeholder="Please select" />
+        </a-form-model-item>
+
         <a-form-model-item label="角色名称" prop="name">
             <a-input v-model="modelForm.name" allow-clear />
         </a-form-model-item>
@@ -37,6 +48,7 @@
 import UploadImage from '@/components/tools/UploadImage';
 import { getRole, update } from '@/api/role';
 import { getPermisstionTree } from '@/api/permission';
+import { getMenuTree } from '@/api/menu';
 
 export default {
     name: 'ModuleForm',
@@ -58,6 +70,7 @@ export default {
             loading: false,
             availableMethods: ['GET', 'POST', 'PUT', 'DELETE', 'ANY'],
             permissions: [],
+            menus: [],
             replaceFields: {
                 children:'children', 
                 title:'name', 
@@ -98,8 +111,8 @@ export default {
          */
         async getRole(id) {
             await getRole({id: id}).then(({ data }) => {
-                const { permission_ids, id, name, description, status } = data
-                const form = {id: id, name: name, description: description, permission_ids: permission_ids ? permission_ids : [], status: status == 2 ? true : false}
+                const { permission_ids, id, name, description, status, menu_ids } = data
+                const form = {id: id, name: name, menu_ids: menu_ids, description: description, permission_ids: permission_ids ? permission_ids : [], status: status == 2 ? true : false}
                 this.$set(this, 'modelForm', form)
             });
         },
@@ -113,13 +126,23 @@ export default {
                     return item.id != 1
                 });
             });
-        }
+        },
+
+        /**
+         * 获取权限树节
+         */
+        async getMenuTree() {
+            await getMenuTree().then(({ data }) => {
+                this.menus = data
+            });
+        },
     },
 
     async mounted() {
         // this.modelForm = this.formData;
 
         await this.getPermissionTree()
+        await this.getMenuTree()
         this.formData.id && this.getRole(this.formData.id);
     }
 };
