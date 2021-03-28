@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0abcb4"],{1791:function(s,n,p){s.exports=p.p+"assets/admin-list.e228b4df.svg"}}]);

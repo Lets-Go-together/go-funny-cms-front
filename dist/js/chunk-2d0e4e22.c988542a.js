@@ -1,0 +1,1 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0e4e22"],{"91b6":function(n,t,e){"use strict";e.r(t),e.d(t,"getQiniuInfo",(function(){return i}));var u=e("b775");function i(n){return Object(u["default"])({url:"/qiniu",method:"get",data:n})}}}]);

@@ -1,0 +1,1 @@
+.global-search-wrapper{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;background:rgba(0,0,0,.45)}.global-search-wrapper .global-search-box{position:absolute;top:20%;left:50%;width:450px;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}.global-search-wrapper .global-search-box .global-search-tips{color:#fff;font-size:16px;text-align:right}
