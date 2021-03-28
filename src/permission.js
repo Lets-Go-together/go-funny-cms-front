@@ -27,15 +27,16 @@ router.beforeEach((to, from, next) => {
     } else {
       // check login user.roles is null
       console.log(store.getters.addRouters.length == 0)
+      console.log(to.path);
       // if (!store.getters.userInfo) {
         if (store.getters.addRouters.length == 0) {
         // request login userInfo
         store
           .dispatch('GetInfo')
           .then(res => {
-            const roles = res.data && res.data.roles
+            const menus = res.data && res.data.menus
             // generate dynamic router
-            store.dispatch('GenerateRoutes', { roles }).then(() => {
+            store.dispatch('GenerateRoutes', { menus }).then(() => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表
               router.addRoutes(store.getters.addRouters)
@@ -62,6 +63,7 @@ router.beforeEach((to, from, next) => {
             })
           })
       } else {
+        console.log("next");
         next()
       }
     }

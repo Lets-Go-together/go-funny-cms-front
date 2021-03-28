@@ -26,6 +26,11 @@
                         <a-tag color="#f50" v-else>禁用</a-tag>
                     </span>
 
+                    <span slot="hidden" slot-scope="hidden">
+                        <a-tag color="#87d068" v-if="hidden == 1">是</a-tag>
+                        <a-tag color="#f50" v-else>否</a-tag>
+                    </span>
+
                     <span slot="action" slot-scope="record">
                         <a-button type="link" @click="edit(record)">{{ $t('edit') }}</a-button>
                         <a-dropdown>
@@ -79,9 +84,20 @@ export default {
                     key: 'icon'
                 },
                 {
+                    title: 'url',
+                    dataIndex: 'url',
+                    key: 'url'
+                },
+                {
                     title: '位置',
                     dataIndex: 'weight',
                     key: 'weight'
+                },
+                {
+                    title: '是否隐藏',
+                    dataIndex: 'hidden',
+                    scopedSlots: { customRender: 'hidden' },
+                    key: 'hidden'
                 },
                 {
                     title: '组件',

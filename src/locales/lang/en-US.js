@@ -3,7 +3,7 @@ import momentEU from 'moment/locale/eu'
 
 const components = {
   antLocale: antdEnUS,
-  momentName: 'eu',
+  momentName: 'en',
   momentLocale: momentEU
 }
 

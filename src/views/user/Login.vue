@@ -137,9 +137,8 @@ export default {
                     loginParams.account = values.username;
                     loginParams.password = values.password;
                     let loginAction = Login(loginParams);
-                    let getInfoAction = GetInfo()
                     
-                    Promise.all([loginAction, getInfoAction]).then(() => {
+                    Promise.all([loginAction]).then(() => {
                         this.loginSuccess()
                     }).finally(() => {
                         state.loginBtn = false;
@@ -200,18 +199,6 @@ export default {
             });
         },
         loginSuccess(res) {
-            console.log(res);
-            // check res.homePage define, set $router.push name res.homePage
-            // Why not enter onComplete
-            /*
-      this.$router.push({ name: 'analysis' }, () => {
-        console.log('onComplete')
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      })
-      */
             this.$router.push({ path: '/' });
             // 延迟 1 秒显示欢迎信息
             setTimeout(() => {

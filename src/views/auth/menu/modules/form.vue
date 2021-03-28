@@ -34,8 +34,16 @@
             <a-textarea type="url" v-model="modelForm.description" allow-clear />
         </a-form-model-item>
 
+        <a-form-model-item label="Url" prop="url">
+            <a-input type="url" v-model="modelForm.url" allow-clear />
+        </a-form-model-item>
+
         <a-form-model-item label="是否禁用" prop="status">
             <a-switch v-model="modelForm.status" checked-children="是" un-checked-children="否" default-checked  allow-clear/>
+        </a-form-model-item>
+
+        <a-form-model-item label="是否隐藏" prop="status">
+            <a-switch v-model="modelForm.hidden" checked-children="是" un-checked-children="否" default-checked  allow-clear/>
         </a-form-model-item>
 
         <a-form-model-item :wrapper-col="{ offset: 4 }">
@@ -88,7 +96,11 @@ export default {
 
                     this.loading = true
                     let params = JSON.parse(JSON.stringify(this.modelForm))
-                    Object.assign(params, {status: params.status ? 2 : 1, hidden: params.hidden ? 2 : 1})
+                    Object.assign(params, {
+                        status: params.status ? 2 : 1, 
+                        hidden: params.hidden ? 1 : 2,
+                    }
+                    )
 
                     let operate
                     if(params.id) {
@@ -126,6 +138,7 @@ export default {
         await this.getMenuTree();
         this.modelForm = Object.assign(this.formData, {
             status: this.formData.status == 2 ? true : false,
+            hidden: this.formData.hidden == 1 ? true : false,
         });
         
     }

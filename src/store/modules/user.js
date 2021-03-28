@@ -28,6 +28,7 @@ const user = {
       state.roles = roles
     },
     SET_MENUS: (state, menus) => {
+      console.log("menus:", menus)
       state.menus = menus
     },
     SET_INFO: (state, info) => {
