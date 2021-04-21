@@ -7,28 +7,25 @@ export const RouteView = {
     render: h => h('router-view')
 };
 
-export const asyncRouterMap = [
-    {
+export const asyncRouterMap = [{
         path: '/',
         name: 'index',
         component: BasicLayout,
         meta: { title: 'menu.home' },
         redirect: '/dashboard',
-        children: [
-            {
-              path: '/dashboard',
-              name: '仪表盘',
-              redirect: '/dashboard/workplace',
-              component: RouteView,
-              meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
-              children: [
-                {
-                  path: '/dashboard/workplace',
-                  name: '仪表盘',
-                  component: () => import('@/views/dashboard/Workplace'),
-                  meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: [ 'dashboard' ] }
-                }
-              ]
+        children: [{
+                path: '/dashboard',
+                name: '仪表盘',
+                redirect: '/dashboard/workplace',
+                component: RouteView,
+                meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['dashboard'] },
+                children: [{
+                    path: '/dashboard/workplace',
+                    name: '仪表盘',
+                    component: () =>
+                        import ('@/views/dashboard/Workplace'),
+                    meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['dashboard'] }
+                }]
             },
 
             // 隐藏基础路由
@@ -39,48 +36,51 @@ export const asyncRouterMap = [
                 name: 'account',
                 hidden: true,
                 meta: { title: '个人页', hidden: true, icon: 'user', keepAlive: true, permission: ['user'] },
-                children: [
-                    {
-                        path: '/account/settings',
-                        name: 'settings',
-                        component: () => import('@/views/account/settings/Index'),
-                        meta: { title: '个人设置', hideHeader: true, hidden: true },
-                        redirect: '/account/settings/base',
-                        hideChildrenInMenu: true,
-                        children: [
-                            {
-                                path: '/account/settings/base',
-                                name: 'BaseSettings',
-                                component: () => import('@/views/account/settings/BaseSetting'),
-                                meta: { title: '基本设置', hidden: true }
-                            },
-                            {
-                                path: '/account/settings/security',
-                                name: 'SecuritySettings',
-                                component: () => import('@/views/account/settings/Security'),
-                                meta: { title: '安全设置', hidden: true, keepAlive: true }
-                            },
-                            {
-                                path: '/account/settings/custom',
-                                name: 'CustomSettings',
-                                component: () => import('@/views/account/settings/Custom'),
-                                meta: { title: '个性化设置', hidden: true, keepAlive: true }
-                            },
-                            {
-                                path: '/account/settings/binding',
-                                name: 'BindingSettings',
-                                component: () => import('@/views/account/settings/Binding'),
-                                meta: { title: '账户绑定', hidden: true, keepAlive: true }
-                            },
-                            {
-                                path: '/account/settings/notification',
-                                name: 'NotificationSettings',
-                                component: () => import('@/views/account/settings/Notification'),
-                                meta: { title: '新消息通知', hidden: true, keepAlive: true }
-                            }
-                        ]
-                    }
-                ]
+                children: [{
+                    path: '/account/settings',
+                    name: 'settings',
+                    component: () =>
+                        import ('@/views/account/settings/Index'),
+                    meta: { title: '个人设置', hideHeader: true, hidden: true },
+                    redirect: '/account/settings/base',
+                    hideChildrenInMenu: true,
+                    children: [{
+                            path: '/account/settings/base',
+                            name: 'BaseSettings',
+                            component: () =>
+                                import ('@/views/account/settings/BaseSetting'),
+                            meta: { title: '基本设置', hidden: true }
+                        },
+                        {
+                            path: '/account/settings/security',
+                            name: 'SecuritySettings',
+                            component: () =>
+                                import ('@/views/account/settings/Security'),
+                            meta: { title: '安全设置', hidden: true, keepAlive: true }
+                        },
+                        {
+                            path: '/account/settings/custom',
+                            name: 'CustomSettings',
+                            component: () =>
+                                import ('@/views/account/settings/Custom'),
+                            meta: { title: '个性化设置', hidden: true, keepAlive: true }
+                        },
+                        {
+                            path: '/account/settings/binding',
+                            name: 'BindingSettings',
+                            component: () =>
+                                import ('@/views/account/settings/Binding'),
+                            meta: { title: '账户绑定', hidden: true, keepAlive: true }
+                        },
+                        {
+                            path: '/account/settings/notification',
+                            name: 'NotificationSettings',
+                            component: () =>
+                                import ('@/views/account/settings/Notification'),
+                            meta: { title: '新消息通知', hidden: true, keepAlive: true }
+                        }
+                    ]
+                }]
             }
         ]
     },
@@ -95,27 +95,28 @@ export const asyncRouterMap = [
  * 基础路由
  * @type { *[] }
  */
-export const constantRouterMap = [
-    {
+export const constantRouterMap = [{
         path: '/user',
         component: UserLayout,
         redirect: '/user/login',
         hidden: true,
-        children: [
-            {
+        children: [{
                 path: 'login',
                 name: 'login',
-                component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
+                component: () =>
+                    import ( /* webpackChunkName: "user" */ '@/views/user/Login')
             },
             {
                 path: 'register',
                 name: 'register',
-                component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
+                component: () =>
+                    import ( /* webpackChunkName: "user" */ '@/views/user/Register')
             },
             {
                 path: 'register-result',
                 name: 'registerResult',
-                component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+                component: () =>
+                    import ( /* webpackChunkName: "user" */ '@/views/user/RegisterResult')
             },
             {
                 path: 'recover',
@@ -127,6 +128,7 @@ export const constantRouterMap = [
 
     {
         path: '/404',
-        component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
+        component: () =>
+            import ( /* webpackChunkName: "fail" */ '@/views/exception/404')
     }
 ];

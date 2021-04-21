@@ -24,8 +24,11 @@
                     <a-row type="flex" justify="space-between" align="middle">
                         <a-col :span="6">
                             <a-list-item-meta :description="`描述: ${item.description}`">
-                                <a slot="title" href="javascript:;">{{ item.account }} <br> &nbsp;<span>{{item.email}}</span></a>
-                                
+                                <a slot="title" href="javascript:;"
+                                    >{{ item.account }} <br />
+                                    &nbsp;<span>{{ item.email }}</span></a
+                                >
+
                                 <a-avatar shape="square" slot="avatar" :src="item.avatar" :size="64" />
                             </a-list-item-meta>
                         </a-col>
@@ -120,11 +123,13 @@ export default {
             params = Object.assign(params, this.filter);
             this.tableLoading = true;
 
-            getList(params).then(({ data }) => {
-                this.data = data.list;
-            }).finally(() => {
-                this.tableLoading = false;
-            })
+            getList(params)
+                .then(({ data }) => {
+                    this.data = data.list;
+                })
+                .finally(() => {
+                    this.tableLoading = false;
+                });
         },
 
         add() {
@@ -138,13 +143,13 @@ export default {
         del(id) {
             del(id).then(data => {
                 this.$message.success(data.message);
-                this.getList()
+                this.getList();
             });
         },
 
         success() {
-            this.formModue.visible = false
-            this.getList()
+            this.formModue.visible = false;
+            this.getList();
         },
 
         edit(item) {

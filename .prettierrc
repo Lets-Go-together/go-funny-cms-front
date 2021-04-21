@@ -1,10 +1,10 @@
 {
-  "printWidth": 190,
-  "singleQuote": true,
-  "semi": true,
-  "arrowParens": "avoid",
-  "tabWidth": 4,
-  "useTabs": false,
-  "disableLanguages": ["vue"],
-  "url": "https://www.cnblogs.com/oneweek/p/11236515.html"
+    "printWidth": 280,
+    "singleQuote": true,
+    "semi": true,
+    "arrowParens": "avoid",
+    "tabWidth": 4,
+    "useTabs": false,
+    "disableLanguages": ["vue"],
+    "url": "https://www.cnblogs.com/oneweek/p/11236515.html"
 }
