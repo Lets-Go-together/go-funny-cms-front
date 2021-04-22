@@ -81,6 +81,22 @@ export const asyncRouterMap = [
                         ]
                     }
                 ]
+            },
+            {
+                path: '/mail',
+                component: RouteView,
+                redirect: '/mail',
+                name: 'account',
+                hidden: false,
+                meta: { title: '邮箱', hidden: true, icon: 'user', keepAlive: true },
+                children: [
+                    {
+                        path: '/mail/outbox',
+                        name: 'outbox',
+                        component: () => import('@/views/mail/module'),
+                        meta: { title: '基本设置', hidden: true }
+                    }
+                ]
             }
         ]
     },
