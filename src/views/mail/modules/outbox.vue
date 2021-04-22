@@ -17,10 +17,6 @@
             <a-divider dashed />
             <div class="tableList">
                 <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="false" @change="handleTableChange">
-                    <span slot="icon" slot-scope="icon"><a-icon :type="icon"/></span>
-                    <span slot="method" slot-scope="method"
-                        ><a-tag color="#2db7f5">{{ method }}</a-tag></span
-                    >
                     <span slot="status" slot-scope="status">
                         <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
                         <a-tag color="#f50" v-else>禁用</a-tag>
