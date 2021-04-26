@@ -1,58 +1,56 @@
 <template>
-    <page-header-wrapper>
-        <a-card>
-            <div class="filters">
-                <a-form :form="filters" layout="inline">
-                    <a-form-item label="">
-                        <a-input placeholder="菜单名称" v-model="filters.keyword"></a-input>
-                    </a-form-item>
-                    <a-form-item label="">
-                        <a-button-group>
-                            <a-button type="primary" icon="search" @click="getList()" :loading="tableLoading">查询</a-button>
-                            <a-button type="primary" icon="add" @click="add()" :loading="tableLoading">添加</a-button>
-                        </a-button-group>
-                    </a-form-item>
-                </a-form>
-            </div>
-            <a-divider dashed />
-            <div class="tableList">
-                <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="false" @change="handleTableChange">
-                    <span slot="status" slot-scope="status">
-                        <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
-                        <a-tag color="#f50" v-else>禁用</a-tag>
-                    </span>
-                    
-                    <span slot="emails" slot-scope="emails">
-                        <a-tag v-for="email in emails" :key="email">{{ email }}</a-tag>
-                    </span>
+    <div>
+        <div class="filters">
+            <a-form :form="filters" layout="inline">
+                <a-form-item label="">
+                    <a-input placeholder="邮件名称" v-model="filters.keyword"></a-input>
+                </a-form-item>
+                <a-form-item label="">
+                    <a-button-group>
+                        <a-button type="primary" icon="search" @click="getList()" :loading="tableLoading">查询</a-button>
+                        <a-button type="primary" icon="add" @click="add()" :loading="tableLoading">添加</a-button>
+                    </a-button-group>
+                </a-form-item>
+            </a-form>
+        </div>
+        <a-divider dashed />
+        <div class="tableList">
+            <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="false" @change="handleTableChange">
+                <span slot="status" slot-scope="status">
+                    <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
+                    <a-tag color="#f50" v-else>禁用</a-tag>
+                </span>
 
-                    <span slot="action" slot-scope="record">
-                        <a-button type="link" @click="edit(record)">{{ $t('edit') }}</a-button>
-                        <a-dropdown>
-                            <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
-                            <a-menu slot="overlay">
-                                <a-menu-item>
-                                    <a-popconfirm :title="$t('confirm_delete')" @confirm="del(record.id)" ok-text="Yes" cancel-text="No">
-                                        <a href="#">{{ $t('delete') }}</a>
-                                    </a-popconfirm>
-                                </a-menu-item>
-                            </a-menu>
-                        </a-dropdown>
-                    </span>
-                </a-table>
-            </div>
-        </a-card>
+                <span slot="emails" slot-scope="emails">
+                    <a-tag v-for="email in emails" :key="email">{{ email }}</a-tag>
+                </span>
 
-        <a-drawer :title="formModue.title" width="800px" :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
+                <span slot="action" slot-scope="record">
+                    <a-button type="link" @click="edit(record)">{{ $t('edit') }}</a-button>
+                    <a-dropdown>
+                        <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
+                        <a-menu slot="overlay">
+                            <a-menu-item>
+                                <a-popconfirm :title="$t('confirm_delete')" @confirm="del(record.id)" ok-text="Yes" cancel-text="No">
+                                    <a href="#">{{ $t('delete') }}</a>
+                                </a-popconfirm>
+                            </a-menu-item>
+                        </a-menu>
+                    </a-dropdown>
+                </span>
+            </a-table>
+        </div>
+
+        <a-drawer :title="formModue.title" width="80%" :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
             <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @success="success" @close="formModue.visible = false"></module-form>
         </a-drawer>
-    </page-header-wrapper>
+    </div>
 </template>
 
 <script>
-import { getList, add, update, del } from '@/api/email';
+import { getList, add, update, del, getMailers } from '@/api/email';
 import PageMixin from '@/mixins/PageMixin';
-import ModuleForm from './modules/form';
+import ModuleForm from './form';
 export default {
     mixins: [PageMixin],
     components: { ModuleForm },
@@ -180,4 +178,3 @@ export default {
     }
 };
 </script>
-<style></style>

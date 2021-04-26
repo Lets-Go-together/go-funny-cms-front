@@ -6,8 +6,8 @@
 import plugins from './plugins';
 import toolbar from './toolbar';
 import load from './dynamicLoadScript';
-const tinymceCDN = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.7.0/tinymce.min.js';
-import { uploadImage } from "@/api/tool"
+const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce@5.7.1/tinymce.min.js';
+import { uploadImage } from '@/api/tool';
 export default {
     name: 'Tinymce',
     props: {
@@ -83,7 +83,7 @@ export default {
             window.tinymce.init({
                 selector: `#${this.tinymceId}`,
                 language: this.languageTypeList['zh'],
-                language_url: 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/langs/zh_CN.js',
+                language_url: 'https://cdn.surest.cn/plugin/tinymce/zh_CN.js',
                 height: this.height,
                 body_class: 'panel-body ',
                 object_resizing: false,
@@ -112,23 +112,25 @@ export default {
                     });
                 },
                 save_onsavecallback: editor => {
-                    _this.$emit('save', _this.value)
+                    _this.$emit('save', _this.value);
                 },
-                autosave_interval: "5s",
+                autosave_interval: '5s',
                 setup(editor) {
                     editor.on('FullscreenStateChanged', e => {
                         _this.fullscreen = e.state;
                     });
                 },
                 images_upload_handler: (blobInfo, success, failure) => {
-                    let formdata = new FormData()
-					formdata.append("file",blobInfo.blob())
+                    let formdata = new FormData();
+                    formdata.append('file', blobInfo.blob());
 
-                    uploadImage(formdata).then((data) => {
-                        success(data.file)
-                    }).catch((err) => {
-                        failure("Server Error")
-                    })
+                    uploadImage(formdata)
+                        .then(data => {
+                            success(data.file);
+                        })
+                        .catch(err => {
+                            failure('Server Error');
+                        });
                 }
             });
         },
@@ -174,7 +176,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .tinymce-container {
     position: relative;
     line-height: normal;

@@ -16,19 +16,19 @@ export const asyncRouterMap = [
         redirect: '/dashboard',
         children: [
             {
-              path: '/dashboard',
-              name: '仪表盘',
-              redirect: '/dashboard/workplace',
-              component: RouteView,
-              meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: [ 'dashboard' ] },
-              children: [
-                {
-                  path: '/dashboard/workplace',
-                  name: '仪表盘',
-                  component: () => import('@/views/dashboard/Workplace'),
-                  meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: [ 'dashboard' ] }
-                }
-              ]
+                path: '/dashboard',
+                name: '仪表盘',
+                redirect: '/dashboard/workplace',
+                component: RouteView,
+                meta: { title: 'menu.dashboard', keepAlive: true, icon: bxAnaalyse, permission: ['dashboard'] },
+                children: [
+                    {
+                        path: '/dashboard/workplace',
+                        name: '仪表盘',
+                        component: () => import('@/views/dashboard/Workplace'),
+                        meta: { title: 'menu.dashboard.workplace', keepAlive: true, permission: ['dashboard'] }
+                    }
+                ]
             },
 
             // 隐藏基础路由
@@ -86,15 +86,16 @@ export const asyncRouterMap = [
                 path: '/mail',
                 component: RouteView,
                 redirect: '/mail',
-                name: 'account',
+                name: 'mail',
                 hidden: false,
-                meta: { title: '邮箱', hidden: true, icon: 'user', keepAlive: true },
+                meta: { title: '邮件管理', hidden: true, icon: 'user', keepAlive: true },
                 children: [
                     {
-                        path: '/mail/outbox',
-                        name: 'outbox',
-                        component: () => import('@/views/mail/module'),
-                        meta: { title: '基本设置', hidden: true }
+                        path: '/mail',
+                        name: 'mailBase',
+                        component: () => import('@/views/mail/Index'),
+                        meta: { title: '邮件列表', hideHeader: true, hidden: true },
+                        hideChildrenInMenu: true
                     }
                 ]
             }
