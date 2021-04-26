@@ -17,7 +17,7 @@
         </a-form-model-item>
 
         <a-form-model-item label="附件" prop="attachments">
-            <Upload :fileList.sync="modelForm.attachments" />
+            <Upload :defaultFileList.sync="modelForm.attachments" />
         </a-form-model-item>
 
         <a-form-model-item label="发送时间" prop="send_at">
@@ -58,17 +58,17 @@ export default {
                 id: '',
                 subject: '',
                 emails: [],
-                content: '',
+                content: '33334',
                 attachments: [],
-                send_at: '',
+                send_at: undefined,
                 mailer: ''
             },
             rules: {
                 subject: [{ required: true, message: '请输入主题', tigger: 'blur' }],
-                content: [{ required: true, message: '请输入内容', tigger: 'blur' }],
+                content: [{ required: true, message: '请输入内容', tigger: 'change' }],
                 emails: [{ required: true, message: '请输入接受邮箱', tigger: 'blur' }],
-                send_at: [{ required: true, message: '请选择发送时间', tigger: 'blur' }],
-                mailer: [{ required: true, message: '请选择配置', tigger: 'blur' }]
+                send_at: [{ required: true, message: '请选择发送时间' }]
+                // mailer: [{ required: true, message: '请选择配置', tigger: 'blur' }]
             },
             loading: false,
             mailers: []
@@ -78,35 +78,44 @@ export default {
         onSubmit() {
             this.$refs.ruleForm.validate(valid => {
                 if (valid) {
-                    let operate;
-                    if (this.modelForm.id) {
-                        operate = update(this.modelForm.id, this.modelForm);
-                    } else {
-                        operate = add(this.modelForm);
-                    }
-                    this.loading = true;
-                    operate
-                        .then(res => {
-                            this.$message.success('Success');
-                            this.loading = false;
-                            this.$emit('success');
-                        })
-                        .catch(() => {
-                            this.loading = false;
-                        });
+                    this.submit();
                 }
+                console.log(this.modelForm);
             });
+        },
+        submit() {
+            const { modelForm } = this;
+            let operate,
+                params = Object.assign({}, modelForm, {
+                    send_at: modelForm.send_at.format('YYYY-MM-DD HH:mm:ss')
+                });
+            if (params.id) {
+                operate = update(params.id, params);
+            } else {
+                operate = add(params);
+            }
+            this.loading = true;
+            operate
+                .then(res => {
+                    this.$message.success('Success');
+                    this.loading = false;
+                    this.$emit('success');
+                })
+                .catch(() => {
+                    this.loading = false;
+                });
         }
     },
 
     async mounted() {
-        this.modelForm = Object.assign(this.formData, {
-            status: this.formData.status == 2 ? true : false,
-            hidden: this.formData.hidden == 1 ? true : false
+        const { formData, modelForm } = this;
+        Object.assign(this.modelForm, formData, {
+            status: formData.status == 2 ? true : false,
+            hidden: formData.hidden == 1 ? true : false
         });
-        await getMailers().then(({ data }) => {
-            this.mailers = data;
-        });
+        // await getMailers().then(({ data }) => {
+        //     this.mailers = data;
+        // });
     }
 };
 </script>

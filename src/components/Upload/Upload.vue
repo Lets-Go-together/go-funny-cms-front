@@ -8,7 +8,7 @@
             <p class="ant-upload-hint">{{ uploadHint }}</p>
         </a-upload-dragger>
 
-        <a-upload v-else :action="url" :data="data" :before-upload="beforeUpload" @change="handleChange">
+        <a-upload v-else :action="url" :fileList="fileList" :data="data" :before-upload="beforeUpload" @change="handleChange">
             <a-button> <a-icon :type="loading ? 'loading' : 'plus'" /> Upload </a-button>
         </a-upload>
     </div>
@@ -46,17 +46,10 @@ export default {
             }
         },
 
-        fileList: {
+        defaultFileList: {
             type: Array,
             default: () => {
-                return [
-                    {
-                        uid: '-1',
-                        name: 'xxx.png',
-                        status: 'done',
-                        url: 'http://www.baidu.com/xxx.png'
-                    }
-                ];
+                return [];
             }
         }
     },
@@ -74,7 +67,8 @@ export default {
                 token: '',
                 key: ''
             },
-            fileLists: []
+            fileList: [],
+            resourceList: []
         };
     },
     watch: {
@@ -94,7 +88,6 @@ export default {
                 this.data.token = token;
                 this.host = host;
                 this.upload_dir = upload_dir;
-                this.data.key = this.upload_dir + randomString();
             });
         },
 
@@ -102,19 +95,33 @@ export default {
             return this.$store.getters.token;
             // return this.modules.user.token;
         },
-        beforeUpload() {},
+        beforeUpload(file) {
+            this.data.key = this.upload_dir + file.name;
+        },
 
         handleChange(info) {
-            this.data.key = this.upload_dir + randomString();
-            console.log(info);
-            if (info.file.status === 'uploading') {
+            let { file, fileList } = info;
+            if (file.status === 'uploading') {
                 this.loading = true;
             }
-            if (info.file.status === 'done') {
+            console.log(file);
+            if (file.status === 'done') {
                 this.loading = false;
-                let filename = this.host + info.file.response.key;
-                this.fileList = this.fileList.concat(filename);
+                console.log(file.response);
+                this.resourceList.push({ uid: file.uid, url: this.host + file.response.key });
             }
+            this.fileList = [...fileList];
+        }
+    },
+    watch: {
+        fileList(val) {
+            let uids = val.map(item => {
+                return item.uid;
+            });
+            let defaultFileList = this.resourceList.filter(item => {
+                return uids.includes(item.uid);
+            });
+            this.$emit('update:defaultFileList', defaultFileList);
         }
     }
 };

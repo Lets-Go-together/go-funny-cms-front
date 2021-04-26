@@ -105,10 +105,12 @@ export default {
                     if (_this.value) {
                         editor.setContent(_this.value);
                     }
+                    console.log(32333);
                     _this.hasInit = true;
                     editor.on('NodeChange Change KeyUp SetContent', () => {
                         this.hasChange = true;
                         this.$emit('input', editor.getContent());
+                        this.$emit('update:value', editor.getContent());
                     });
                 },
                 save_onsavecallback: editor => {
@@ -154,8 +156,11 @@ export default {
 
     watch: {
         value(val) {
+            console.log('333');
             if (!this.hasChange && this.hasInit) {
-                this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val || ''));
+                this.$nextTick(() => {
+                    window.tinymce.get(this.tinymceId).setContent(val || '');
+                });
             }
         }
     },
