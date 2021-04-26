@@ -1,7 +1,8 @@
 {
-    "message": "hello i18n !!",
-    "add": "添加",
-    "edit": "编辑",
-    "delete": "删除",
-    "confirm_delete": "是否确认删除 ?"
-  }
+  "message": "hello i18n !!",
+  "add": "添加",
+  "edit": "编辑",
+  "delete": "删除",
+  "confirm_delete": "是否确认删除 ?",
+  "Add Email": "添加邮箱"
+}

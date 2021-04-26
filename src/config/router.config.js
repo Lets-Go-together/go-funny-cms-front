@@ -86,15 +86,16 @@ export const asyncRouterMap = [{
                 path: '/mail',
                 component: RouteView,
                 redirect: '/mail',
-                name: 'account',
+                name: 'mail',
                 hidden: false,
-                meta: { title: '邮箱', hidden: true, icon: 'user', keepAlive: true },
+                meta: { title: '邮件管理', hidden: true, icon: 'user', keepAlive: true },
                 children: [{
-                    path: '/mail/outbox',
-                    name: 'outbox',
+                    path: '/mail',
+                    name: 'mailBase',
                     component: () =>
-                        import ('@/views/mail/module'),
-                    meta: { title: '基本设置', hidden: true }
+                        import ('@/views/mail/Index'),
+                    meta: { title: '邮件列表', hideHeader: true, hidden: true },
+                    hideChildrenInMenu: true
                 }]
             }
         ]
