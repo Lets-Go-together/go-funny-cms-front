@@ -18,7 +18,9 @@
             <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="false" @change="handleTableChange">
                 <span slot="status" slot-scope="status">
                     <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
-                    <a-tag color="#f50" v-else>禁用</a-tag>
+                    <a-tag color="#108ee9" v-if="status == 2">发送中</a-tag>
+                    <a-tag color="#87d068" v-if="status == 3">发送成功</a-tag>
+                    <a-tag color="#f50" v-if="status == 4">发送失败</a-tag>
                 </span>
 
                 <span slot="emails" slot-scope="emails">
@@ -66,15 +68,9 @@ export default {
                     key: 'id'
                 },
                 {
-                    title: '标题',
-                    dataIndex: 'name',
-                    key: 'name'
-                },
-                {
-                    title: '已发送',
-                    scopedSlots: { customRender: 'emails' },
-                    dataIndex: 'icon',
-                    key: 'icon'
+                    title: 'Email',
+                    dataIndex: 'email',
+                    key: 'email'
                 },
                 {
                     title: '主题',
@@ -86,11 +82,6 @@ export default {
                     scopedSlots: { customRender: 'status' },
                     dataIndex: 'status',
                     key: 'status'
-                },
-                {
-                    title: '操作人',
-                    dataIndex: 'submitter',
-                    key: 'submitter'
                 },
                 {
                     title: '发送时间',

@@ -107,8 +107,8 @@ export default {
             console.log(file);
             if (file.status === 'done') {
                 this.loading = false;
-                console.log(file.response);
-                this.resourceList.push({ uid: file.uid, url: this.host + file.response.key });
+                this.resourceList.push({ uid: file.uid, url: this.host + file.response.key, filename: file.name });
+                console.log(this.resourceList);
             }
             this.fileList = [...fileList];
         }
@@ -121,6 +121,7 @@ export default {
             let defaultFileList = this.resourceList.filter(item => {
                 return uids.includes(item.uid);
             });
+            console.log(defaultFileList);
             this.$emit('update:defaultFileList', defaultFileList);
         }
     }
