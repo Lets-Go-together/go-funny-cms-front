@@ -4,8 +4,8 @@
 
 ## 项目地址
 
-前端项目: https://github.com/Lets-Go-together/go-funny-cms-front
-后端项目: https://github.com/Lets-Go-together/go-funny-cms
+前端项目: https://github.com/Lets-Go-together/go-funny-cms-front 或者 https://gitee.com/surest-sky/go-funny-cms-front.git
+后端项目: https://github.com/Lets-Go-together/go-funny-cms 或者 https://gitee.com/surest-sky/go-funny-cms.git
 
 ## 项目简介
 
