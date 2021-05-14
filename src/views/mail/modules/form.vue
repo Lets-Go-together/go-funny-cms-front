@@ -58,7 +58,7 @@ export default {
                 id: '',
                 subject: '',
                 emails: [],
-                content: '33334',
+                content: '',
                 attachments: [],
                 send_at: undefined,
                 mailer: ''

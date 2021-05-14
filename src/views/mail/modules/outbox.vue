@@ -15,7 +15,7 @@
         </div>
         <a-divider dashed />
         <div class="tableList">
-            <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="false" @change="handleTableChange">
+            <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="pagination" @change="handleTableChange">
                 <span slot="status" slot-scope="status">
                     <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
                     <a-tag color="#108ee9" v-if="status == 2">发送中</a-tag>
@@ -28,7 +28,7 @@
                 </span>
 
                 <span slot="action" slot-scope="record">
-                    <a-button type="link" @click="edit(record)">{{ $t('edit') }}</a-button>
+                    <!-- <a-button type="link" @click="edit(record)">{{ $t('edit') }}</a-button> -->
                     <a-dropdown>
                         <a class="ant-dropdown-link" @click="e => e.preventDefault()">更多<a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -36,6 +36,9 @@
                                 <a-popconfirm :title="$t('confirm_delete')" @confirm="del(record.id)" ok-text="Yes" cancel-text="No">
                                     <a href="#">{{ $t('delete') }}</a>
                                 </a-popconfirm>
+                            </a-menu-item>
+                            <a-menu-item>
+                                <a href="javascript:;" @click="showContent(record)">查看邮件</a>
                             </a-menu-item>
                         </a-menu>
                     </a-dropdown>
@@ -46,16 +49,20 @@
         <a-drawer :title="formModue.title" width="80%" :visible="formModue.visible" :confirm-loading="formModue.loadding" @close="formModue.visible = false">
             <module-form v-if="formModue.visible" :formData.sync="formModue.formData" @success="success" @close="formModue.visible = false"></module-form>
         </a-drawer>
+
+        <Content :title="title" :visible.sync="visible" :content="content" />
     </div>
 </template>
 
 <script>
-import { getList, add, update, del, getMailers } from '@/api/email';
+import { getList, del } from '@/api/email';
 import PageMixin from '@/mixins/PageMixin';
 import ModuleForm from './form';
+import Content from './html';
+import mixin from './mixin';
 export default {
-    mixins: [PageMixin],
-    components: { ModuleForm },
+    mixins: [PageMixin, mixin],
+    components: { ModuleForm, Content },
     data() {
         return {
             filters: {
@@ -110,13 +117,20 @@ export default {
          * table列表
          */
         getList(params = {}) {
-            params = Object.assign(params, this.pageParams, this.filters);
+            params = Object.assign(
+                {
+                    status: [1, 2, 3, 4]
+                },
+                params,
+                this.pageParams,
+                this.filters
+            );
             this.tableLoading = true;
             getList(params)
                 .then(({ data }) => {
-                    this.data = data;
+                    this.data = data.list;
                     this.tableLoading = false;
-                    // this.pagination.total = 10;
+                    this.pagination.total = data.total;
                 })
                 .catch(() => {
                     this.tableLoading = false;
@@ -142,17 +156,6 @@ export default {
             del(id).then(data => {
                 this.$message.success(data.message);
                 this.getList();
-            });
-        },
-
-        /**
-         * 添加
-         */
-        add() {
-            this.$set(this, 'formModue', {
-                title: '添加',
-                visible: true,
-                formData: {}
             });
         },
 

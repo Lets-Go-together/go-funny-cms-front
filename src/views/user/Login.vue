@@ -16,7 +16,7 @@
                         </a-input-password>
                     </a-form-item>
                 </a-tab-pane>
-                <a-tab-pane key="tab2" tab="手机号登录">
+                <!-- <a-tab-pane key="tab2" tab="手机号登录">
                     <a-form-item>
                         <a-input size="large" type="text" placeholder="手机号" v-decorator="['mobile', { rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change' }]">
                             <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }" />
@@ -35,11 +35,11 @@
                             <a-button class="getCaptcha" tabindex="-1" :disabled="state.smsSendBtn" @click.stop.prevent="getCaptcha" v-text="(!state.smsSendBtn && '获取验证码') || state.time + ' s'"></a-button>
                         </a-col>
                     </a-row>
-                </a-tab-pane>
+                </a-tab-pane> -->
             </a-tabs>
 
             <a-form-item>
-                <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登录</a-checkbox>
+                <!-- <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">自动登录</a-checkbox> -->
                 <router-link :to="{ name: 'recover', params: { user: 'aaa' } }" class="forge-password" style="float: right;">忘记密码</router-link>
             </a-form-item>
 
@@ -137,13 +137,14 @@ export default {
                     loginParams.account = values.username;
                     loginParams.password = values.password;
                     let loginAction = Login(loginParams);
-                    
-                    Promise.all([loginAction]).then(() => {
-                        this.loginSuccess()
-                    }).finally(() => {
-                        state.loginBtn = false;
-                    })
-                    
+
+                    Promise.all([loginAction])
+                        .then(() => {
+                            this.loginSuccess();
+                        })
+                        .finally(() => {
+                            state.loginBtn = false;
+                        });
                 } else {
                     setTimeout(() => {
                         state.loginBtn = false;

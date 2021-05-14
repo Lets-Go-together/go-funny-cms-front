@@ -34,7 +34,7 @@ export function update(id, params) {
 
 export function del(id) {
     return request({
-        url: `/admin/delete`,
+        url: `/mail/delete`,
         method: 'delete',
         data: { id: id }
     });
