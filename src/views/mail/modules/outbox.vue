@@ -17,8 +17,8 @@
         <div class="tableList">
             <a-table rowKey="id" :loading="tableLoading" :columns="columns" :data-source="data" :pagination="pagination" @change="handleTableChange">
                 <span slot="status" slot-scope="status">
-                    <a-tag color="#87d068" v-if="status == 1">正常</a-tag>
-                    <a-tag color="#108ee9" v-if="status == 2">发送中</a-tag>
+                    <a-tag color="#108ee9" v-if="status == 1">待发送</a-tag>
+                    <a-tag color="#87d068" v-if="status == 2">发送中</a-tag>
                     <a-tag color="#87d068" v-if="status == 3">发送成功</a-tag>
                     <a-tag color="#f50" v-if="status == 4">发送失败</a-tag>
                 </span>

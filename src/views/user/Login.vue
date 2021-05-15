@@ -11,7 +11,7 @@
                     </a-form-item>
 
                     <a-form-item>
-                        <a-input-password size="large" placeholder="密码: admin or ant.design" v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]">
+                        <a-input-password size="large" placeholder="密码: 123456" v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]">
                             <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
                         </a-input-password>
                     </a-form-item>

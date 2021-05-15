@@ -1,11 +1,21 @@
-## Go-Funny-CMS
+## Golang 通用后台权限管理系统 (Go-Funny-CMS )
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/Lets-Go-together/go-funny-cms)](https://goreportcard.com/report/github.com/Lets-Go-together/go-funny-cms)
 
+### 线上地址演示
+
+    https://admin-go.surest.cn
+    账号: surest
+    密码: 123456
+
+## 预览
+
+![图片描述...](https://cdn.surest.cn/FuZGBSxkTbk_eS4OPM5FYqLZ6bQV)
+
 ## 项目地址
 
-前端项目: https://github.com/Lets-Go-together/go-funny-cms-front 或者 https://gitee.com/surest-sky/go-funny-cms-front.git
-后端项目: https://github.com/Lets-Go-together/go-funny-cms 或者 https://gitee.com/surest-sky/go-funny-cms.git
+前端项目: https://github.com/Lets-Go-together/go-funny-cms-front
+后端项目: https://github.com/Lets-Go-together/go-funny-cms
 
 ## 项目简介
 
@@ -26,7 +36,7 @@
 ## 快速安装
 
     # 后端项目
-    > git clone git@github.com:Lets-Go-together/go-funny-cms.git
+    > https://github.com/Lets-Go-together/go-funny-cms.git
     > cd go-funny-cms
     > 导入sql: backups/funy_cms_20210514_153117.sql.gz
     > cp .env .env.example
@@ -35,7 +45,7 @@
     > air
 
     # 前端项目
-    > git clone git@github.com:Lets-Go-together/go-funny-cms-front.git
+    > https://github.com/Lets-Go-together/go-funny-cms-front.git
     > cd go-funny-cms-front
     > yarn install
     > npm run dev
@@ -86,9 +96,3 @@
 以上这个项目，如果有有趣的想法，欢迎一起讨论，再基础上继续开发
 
 我们都"不止于此" ~
-
-### 线上地址演示
-
-    https://admin-go.surest.cn
-    账号: surest
-    密码: 123456
