@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-modal v-model="show" :title="title" :cancelText="false" @ok="handleOk">
+        <a-modal v-model="show" :title="title" :width="`85%`" :cancelText="false" @ok="handleOk">
             <div v-html="content"></div>
         </a-modal>
     </div>
